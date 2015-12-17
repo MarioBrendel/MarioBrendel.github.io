@@ -3,9 +3,9 @@
   <title><![CDATA[Mario-Brendel.com]]></title>
   <subtitle><![CDATA[Info Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://MarioBrendel.github.io/"/>
+  <link href="http://mario-brendel.com/"/>
   <updated>2015-12-15T20:49:28.119Z</updated>
-  <id>http://MarioBrendel.github.io/</id>
+  <id>http://mario-brendel.com/</id>
   
   <author>
     <name><![CDATA[Mario]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[test]]></title>
-    <link href="http://MarioBrendel.github.io/2016/09/04/post01/"/>
-    <id>http://MarioBrendel.github.io/2016/09/04/post01/</id>
+    <link href="http://mario-brendel.com/2016/09/04/post01/"/>
+    <id>http://mario-brendel.com/2016/09/04/post01/</id>
     <published>2016-09-03T22:00:00.000Z</published>
     <updated>2015-12-15T20:49:28.119Z</updated>
     <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -34,7 +34,7 @@
     
     </summary>
     
-      <category term="Java" scheme="http://MarioBrendel.github.io/categories/Java/"/>
+      <category term="Java" scheme="http://mario-brendel.com/categories/Java/"/>
     
   </entry>
   
