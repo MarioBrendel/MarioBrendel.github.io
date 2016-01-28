@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Mario Brendel</title>
+ <link href="http://mario-brendel.com/atom.xml" rel="self"/>
+ <link href="http://mario-brendel.com/"/>
+ <updated>2016-01-28T22:00:37+01:00</updated>
+ <id>http://mario-brendel.com</id>
+ <author>
+   <name>Mario Brendel</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</title>
+   <link href="http://mario-brendel.com/angular2-tutorial/2016/01/28/Angular2_Jspm_Setup/"/>
+   <updated>2016-01-28T00:00:00+01:00</updated>
+   <id>http://mario-brendel.com/angular2-tutorial/2016/01/28/Angular2_Jspm_Setup</id>
+   <content type="html">&lt;p&gt;This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0 .
+&lt;h2&gt;Setting Up Atom&lt;/h2&gt;
+If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;. Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.
+&lt;h2&gt;Setting up the Project&lt;/h2&gt;
+At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:
+&lt;br /&gt;&lt;pre&gt;&lt;code&gt;npm install jspm &lt;br /&gt;jspm init -y&lt;/pre&gt;&lt;/code&gt;
+The npm install is used to get jspm which will install our frontend package manager.&lt;br /&gt; For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
+&lt;br /&gt;JSPM init is used to initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
+After you have executed these commands create a folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
+&lt;br/&gt;
+Now we will change the config.js a little bit to make it compatible with our following typescript files:
+&lt;pre&gt;&lt;code&gt;&lt;code&gt;typescriptOptions: {
+    &amp;quot;tsconfig&amp;quot;: true // indicates that a tsconfig exists that should be used
+  },
+  packages: {
+    &amp;quot;app&amp;quot;: { // all files within the app folder
+      &amp;quot;main&amp;quot;: &amp;quot;bootstrap&amp;quot;, // main file of the package (will be important later)
+      &amp;quot;format&amp;quot;: &amp;quot;system&amp;quot;, // module format
+      &amp;quot;defaultExtension&amp;quot;: &amp;quot;ts&amp;quot;, // default extension of all files
+      &amp;quot;meta&amp;quot;: {
+        &amp;quot;*.ts&amp;quot;: { // all ts files will be loaded with the ts loader
+          &amp;quot;loader&amp;quot;: &amp;quot;ts&amp;quot;
+        },
+        &amp;quot;*.css&amp;quot;: {
+          &amp;quot;loader&amp;quot;: &amp;quot;css&amp;quot;
+        },
+        &amp;quot;*.html&amp;quot;: {
+          &amp;quot;loader&amp;quot;: &amp;quot;text&amp;quot;
+        }
+      }
+    }
+  },
+&lt;/code&gt;
+&lt;/pre&gt;&lt;/code&gt;
+And finally we will create &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/tsconfig.json&quot;&gt;tsconfig&lt;/a&gt; file within our root folder. This file is used to give the typescript compiler some informations about our environment.
+&lt;pre&gt;&lt;code&gt;
+&lt;code&gt;{
+ &amp;quot;compilerOptions&amp;quot;: {
+    &amp;quot;target&amp;quot;: &amp;quot;es5&amp;quot;,                /* target of the compilation (es5) */
+    &amp;quot;module&amp;quot;: &amp;quot;system&amp;quot;,             /* System.register([dependencies], function) (in JS)*/
+    &amp;quot;moduleResolution&amp;quot;: &amp;quot;node&amp;quot;,     /* how module gets resolved (needed for Angular 2)*/
+    &amp;quot;emitDecoratorMetadata&amp;quot;: true,  /* needed for decorators */
+    &amp;quot;experimentalDecorators&amp;quot;: true, /* needed for decorators */ (@Injectable)
+    &amp;quot;noImplicitAny&amp;quot;: false          /* any has to be written explicity*/
+  },
+  &amp;quot;exclude&amp;quot;: [   /* since compiling these packages could take ages, we want to ignore them*/
+    &amp;quot;jspm_packages&amp;quot;,
+    &amp;quot;node_modules&amp;quot;
+  ],
+  &amp;quot;compileOnSave&amp;quot;: false        /* on default the compiler will create js files */
+}&lt;/code&gt;
+&lt;/pre&gt;&lt;/code&gt;
+&lt;b&gt;Note: &lt;/b&gt;The comments in the tsconfig file might give you an error, so you better delete them.
+&lt;br/&gt;&lt;br/&gt;To get all the packages we need for development, we will use jspm install. To find out what packages are currently available with the jspm installer you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:
+&lt;pre&gt;&lt;code&gt;jspm install ts &lt;br/&gt;jspm install angular2&lt;/pre&gt;&lt;/code&gt;
+The first command is used to install the typescript plugin which is used for our ts loader, that you can see above.
+&lt;br/&gt;&lt;br/&gt;
+Normally this is everything you need for your project setup but there is currently an error with the &lt;a href=&quot;https://github.com/Microsoft/TypeScript/issues/6012&quot;&gt;module resolution&lt;/a&gt;. So we need to at the following lines to our package.json file:
+&lt;pre&gt;&lt;code&gt;
+&lt;code&gt;&amp;quot;dependencies&amp;quot;: {
+    &amp;quot;angular2&amp;quot;: &amp;quot;2.0.0-beta.1&amp;quot;,
+    &amp;quot;es6-promise&amp;quot;: &amp;quot;^3.0.2&amp;quot;,
+    &amp;quot;es6-shim&amp;quot;: &amp;quot;^0.33.3&amp;quot;,
+    &amp;quot;reflect-metadata&amp;quot;: &amp;quot;0.1.2&amp;quot;,
+    &amp;quot;rxjs&amp;quot;: &amp;quot;5.0.0-beta.0&amp;quot;,
+    &amp;quot;zone.js&amp;quot;: &amp;quot;0.5.10&amp;quot;
+}&lt;/code&gt;
+&lt;/pre&gt;&lt;/code&gt;
+Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis will throw errors as soon as we import a module from the angular2 package.
+&lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so i would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
+&lt;h2&gt;Writing Some Code&lt;/h2&gt;
+Now that we&amp;#39;ve got everything wired up we will write some code. At first we create a index.html file at our root folder with the following code:
+&lt;pre&gt;&lt;code&gt;
+&lt;code&gt;&amp;lt;!doctype html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;title&amp;gt;My First Angular2 App&amp;lt;/title&amp;gt;
+  &amp;lt;script src=&amp;quot;node_modules/angular2/bundles/angular2-polyfills.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;jspm_packages/system.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;config.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- this will be our entry component for the application --&amp;gt;
+  &amp;lt;app&amp;gt;&amp;lt;/app&amp;gt;
+  &amp;lt;script&amp;gt;
+    System.import(&amp;#39;app&amp;#39;).then(null, console.error.bind(console));
+  &amp;lt;/script&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;&lt;/code&gt;
+&lt;/pre&gt;&lt;/code&gt;
+Next we will create the bootstrap.ts file in the app directory:
+&lt;pre&gt;&lt;code&gt;
+import { bootstrap } from &amp;#39;angular2/platform/browser&amp;#39;;
+import {AppComponent} from &amp;quot;./app.component&amp;quot;;
+bootstrap(AppComponent);
+&lt;/pre&gt;&lt;/code&gt;
+and the corresponding app.component.ts file
+&lt;pre&gt;&lt;code&gt;
+import {Component} from &amp;#39;angular2/core&amp;#39;;
+@Component({
+  selector: &amp;#39;app&amp;#39;,
+  template: &amp;#39;&lt;code&gt;&amp;lt;p&amp;gt;Hello World&amp;lt;/p&amp;gt;&lt;/code&gt;&amp;#39;
+})
+export class AppComponent {
+  constructor() { }
+}
+&lt;/pre&gt;&lt;/code&gt;
+Finally our folder structure should look something like this:
+&lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_final(part 1).PNG&quot;&gt;
+&lt;h2&gt;Running The Application&lt;/h2&gt;
+To run our Application we execute the following commands:
+&lt;pre&gt;&lt;code&gt;npm install live-server -g &lt;br/&gt;live-server&lt;/pre&gt;&lt;/code&gt;
+This will start our application and print hello world on your browser. if you had any issues with this tutorial feel free to contact me.
+&lt;br/&gt;&lt;/br&gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we don&amp;#39;t have to wait 5 seconds until every change to our app is published. Furthermore we will use the bundling of jspm to generate a minified js file of our application.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

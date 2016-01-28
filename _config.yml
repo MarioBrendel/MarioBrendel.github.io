@@ -1,0 +1,27 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Mario Brendel
+tagline:          'Blog About Angular2'
+description:      'Blog About Angular2'
+url:              http://mario-brendel.com
+baseurl:          /
+
+author:
+  name:           Mario Brendel
+  url:
+
+paginate:         5
+gems:             [jekyll-paginate]
+paginate_path:    "page:num"
+
+# Custom vars
+# version:          2.1.0
+
+github:
+  repo:           https://github.com/MarioBrendel
