@@ -50,6 +50,34 @@
  	max-width: 400px;
  }
 
+ .myButton {
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+  background-color: #195F94;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #0196f9;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:17px;
+	padding:11px 11px;
+	text-decoration:none;
+}
+.myButton:hover {
+	background-color:#1089cf;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+
+
 html {
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
 }

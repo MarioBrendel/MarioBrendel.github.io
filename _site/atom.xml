@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://mario-brendel.com/atom.xml" rel="self"/>
  <link href="http://mario-brendel.com/"/>
- <updated>2016-01-29T10:56:54+01:00</updated>
+ <updated>2016-01-29T15:12:56+01:00</updated>
  <id>http://mario-brendel.com</id>
  <author>
    <name>Mario Brendel</name>
@@ -45,12 +45,6 @@ Now we will change the config.js a little bit to make it compatible with our fol
         &amp;quot;*.ts&amp;quot;: { // all ts files will be loaded with the ts loader
           &amp;quot;loader&amp;quot;: &amp;quot;ts&amp;quot;
         },
-        &amp;quot;*.css&amp;quot;: {
-          &amp;quot;loader&amp;quot;: &amp;quot;css&amp;quot;
-        },
-        &amp;quot;*.html&amp;quot;: {
-          &amp;quot;loader&amp;quot;: &amp;quot;text&amp;quot;
-        }
       }
     }
   },

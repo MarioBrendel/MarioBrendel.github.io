@@ -17,12 +17,15 @@ title: Home
     <div class="post-content-truncate">
       {% if post.content contains "[more]" %}
         {{ post.content | split:"[more]" | first % }}
+        <br/>
+        <a href="{{ post.url }}" class="myButton">Read more</a>
       {% else %}
         {{ post.content | truncatewords:75 }}
+        <br/>
+        <a href="{{ post.url }}" class="myButton">Read more</a>
       {% endif %}
     </div>
   </div>
-  <hr />
   {% endfor %}
 </div>
 
