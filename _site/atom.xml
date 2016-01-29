@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://mario-brendel.com/atom.xml" rel="self"/>
  <link href="http://mario-brendel.com/"/>
- <updated>2016-01-28T22:00:37+01:00</updated>
+ <updated>2016-01-29T10:39:27+01:00</updated>
  <id>http://mario-brendel.com</id>
  <author>
    <name>Mario Brendel</name>
@@ -14,20 +14,20 @@
  
  <entry>
    <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</title>
-   <link href="http://mario-brendel.com/angular2-tutorial/2016/01/28/Angular2_Jspm_Setup/"/>
+   <link href="http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup/"/>
    <updated>2016-01-28T00:00:00+01:00</updated>
-   <id>http://mario-brendel.com/angular2-tutorial/2016/01/28/Angular2_Jspm_Setup</id>
+   <id>http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup</id>
    <content type="html">&lt;p&gt;This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0 .
 &lt;h2&gt;Setting Up Atom&lt;/h2&gt;
 If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;. Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.
 &lt;h2&gt;Setting up the Project&lt;/h2&gt;
 At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:
-&lt;br /&gt;&lt;pre&gt;&lt;code&gt;npm install jspm &lt;br /&gt;jspm init -y&lt;/pre&gt;&lt;/code&gt;
+&lt;br /&gt;&lt;pre&gt;&lt;code&gt;npm install jspm -g&lt;br /&gt;jspm init -y&lt;/pre&gt;&lt;/code&gt;
 The npm install is used to get jspm which will install our frontend package manager.&lt;br /&gt; For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
 &lt;br /&gt;JSPM init is used to initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
-After you have executed these commands create a folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
+After you have executed these commands create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
 &lt;br/&gt;
-Now we will change the config.js a little bit to make it compatible with our following typescript files:
+Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:
 &lt;pre&gt;&lt;code&gt;&lt;code&gt;typescriptOptions: {
     &amp;quot;tsconfig&amp;quot;: true // indicates that a tsconfig exists that should be used
   },
@@ -51,6 +51,7 @@ Now we will change the config.js a little bit to make it compatible with our fol
   },
 &lt;/code&gt;
 &lt;/pre&gt;&lt;/code&gt;
+File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js&quot;&gt;config.js&lt;/a&gt;&lt;br/&gt;
 And finally we will create &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/tsconfig.json&quot;&gt;tsconfig&lt;/a&gt; file within our root folder. This file is used to give the typescript compiler some informations about our environment.
 &lt;pre&gt;&lt;code&gt;
 &lt;code&gt;{
@@ -69,6 +70,7 @@ And finally we will create &lt;a href=&quot;https://github.com/Microsoft/TypeScr
   &amp;quot;compileOnSave&amp;quot;: false        /* on default the compiler will create js files */
 }&lt;/code&gt;
 &lt;/pre&gt;&lt;/code&gt;
+File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt;&lt;br/&gt;
 &lt;b&gt;Note: &lt;/b&gt;The comments in the tsconfig file might give you an error, so you better delete them.
 &lt;br/&gt;&lt;br/&gt;To get all the packages we need for development, we will use jspm install. To find out what packages are currently available with the jspm installer you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:
 &lt;pre&gt;&lt;code&gt;jspm install ts &lt;br/&gt;jspm install angular2&lt;/pre&gt;&lt;/code&gt;
@@ -85,6 +87,7 @@ Normally this is everything you need for your project setup but there is current
     &amp;quot;zone.js&amp;quot;: &amp;quot;0.5.10&amp;quot;
 }&lt;/code&gt;
 &lt;/pre&gt;&lt;/code&gt;
+File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt;&lt;br/&gt;
 Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis will throw errors as soon as we import a module from the angular2 package.
 &lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so i would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
 &lt;h2&gt;Writing Some Code&lt;/h2&gt;
