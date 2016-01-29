@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://mario-brendel.com/atom.xml" rel="self"/>
  <link href="http://mario-brendel.com/"/>
- <updated>2016-01-29T10:39:27+01:00</updated>
+ <updated>2016-01-29T10:56:54+01:00</updated>
  <id>http://mario-brendel.com</id>
  <author>
    <name>Mario Brendel</name>
@@ -17,7 +17,12 @@
    <link href="http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup/"/>
    <updated>2016-01-28T00:00:00+01:00</updated>
    <id>http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup</id>
-   <content type="html">&lt;p&gt;This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0 .
+   <content type="html">&lt;p&gt;This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.
+&lt;h2&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version: &amp;gt;=2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Node&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;Setting Up Atom&lt;/h2&gt;
 If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;. Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.
 &lt;h2&gt;Setting up the Project&lt;/h2&gt;

@@ -6,7 +6,12 @@ author: Mario Brendel
 comments: true
 categories: [Angular2-Setup]
 ---
-This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0 .
+This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.
+<h2>Prerequisites</h2>
+<ul>
+  <li>[NPM version: >=2](https://www.npmjs.com/package/npm)</li>
+  <li>[Node](https://nodejs.org/en/download/)</li>
+</ul>
 <h2>Setting Up Atom</h2>
 If you haven't already downloaded atom, please navigate to: [atom.io](https://atom.io). Next you have to install some packages within your editor. Hit 'ctrl + ,' to manover to your settings. Then select install and download: [Atom-Typescript](https://atom.io/packages/atom-typescript). As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.
 <h2>Setting up the Project</h2>
