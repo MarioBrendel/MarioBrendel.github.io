@@ -34,12 +34,6 @@ Now we will change the config.js a little bit to make it compatible with our fol
         "*.ts": { // all ts files will be loaded with the ts loader
           "loader": "ts"
         },
-        "*.css": {
-          "loader": "css"
-        },
-        "*.html": {
-          "loader": "text"
-        }
       }
     }
   },
