@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://mario-brendel.com/atom.xml" rel="self"/>
  <link href="http://mario-brendel.com/"/>
- <updated>2016-01-29T15:12:56+01:00</updated>
+ <updated>2016-01-30T00:07:11+01:00</updated>
  <id>http://mario-brendel.com</id>
  <author>
    <name>Mario Brendel</name>
@@ -13,126 +13,277 @@
 
  
  <entry>
+   <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</title>
+   <link href="http://mario-brendel.com/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2/"/>
+   <updated>2016-01-29T00:00:00+01:00</updated>
+   <id>http://mario-brendel.com/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2</id>
+   <content type="html">&lt;p&gt;In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
+Whenever you have problems with this tutorial, you can look up the code at &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed&quot;&gt;Github&lt;/a&gt; or contact me :).
+&lt;h2&gt;Implementing SystemJS-Hot-Reloader&lt;/h2&gt;
+You may ask yourself what SystemJS actually is. Well you&amp;#39;ve already used it in your index.html file together with the config.js:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;[index.html]
+...
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;app&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// all files within the app folder&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;main&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;bootstrap&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// main file of the package (will be important later)&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;format&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;system&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// module format&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line &amp;quot;format&amp;quot;: &amp;quot;system&amp;quot;. &lt;br/&gt;&lt;br/&gt;
+Now lets extend our &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt; with the following lines:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;devDependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;chokidar-socket-emitter&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^0.4.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// event source for systemjs-hot-reloader&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;http-server&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^0.8.5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;             &lt;span class=&quot;c1&quot;&gt;// basic http-server&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;open&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.5&amp;quot;&lt;/span&gt;                      &lt;span class=&quot;c1&quot;&gt;// will automaticly open our page on the given port&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And run &lt;pre&gt;&lt;code&gt;npm install --dev&lt;/pre&gt;&lt;/code&gt;
+After you have executed these commands run the following line
+&lt;pre&gt;&lt;code&gt;jspm install systemjs-hot-reloader&lt;/pre&gt;&lt;/code&gt;
+This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
+the entire app. For more information see &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;. &lt;br/&gt; &lt;br/&gt;&lt;/p&gt;
+
+&lt;p&gt;Now lets create a server.js file within our root folder that will combine our http-server with the chokidar-socket-emitter:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;use strict&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;httpServer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http-server&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;open&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3600&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ENV&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;production&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;running in production mode(with caching)-make sure you have &amp;quot;Disable cache (while DevTools is open)&amp;quot; checked in the browser to see the changes while developing&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;httpServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;robots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;Access-Control-Allow-Origin&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;Access-Control-Allow-Credentials&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;true&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chokidar-socket-emitter&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)({&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9089&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://localhost:9089&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To actually use the server.js file we&amp;#39;ll implement the following lines in our package.json:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;start&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;node server&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Last but not least we will update our index.html:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;My First Angular2 App&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;node_modules/angular2/bundles/angular2-polyfills.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;jspm_packages/system.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;config.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;app&amp;gt;&amp;lt;/app&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;readyForMainLoad&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;origin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/localhost/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;readyForMainLoad&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;systemjs-hot-reloader&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;HotReloader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;hr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HotReloader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://localhost:9089&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readyForMainLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;running&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As soon as you run your app on localhost, the SystemJS-Hot-Reloader will be used. If you are running
+the app in production the reloader won&amp;#39;t be used.&lt;br/&gt;
+&lt;h2&gt;Running The Application&lt;/h2&gt;
+Finally we will run our app with
+&lt;pre&gt;&lt;code&gt;npm start&lt;/pre&gt;&lt;/code&gt;
+And if everything went right, you should be able to hot reload your application.
+&lt;img src=&quot;../../../../../public/gifs/hot-reloading.gif&quot;&gt;
+&lt;b&gt;Note &lt;/b&gt;that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
+&lt;h2&gt;Bundling Our Application&lt;/h2&gt;
+This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
+with jspm.
+ &lt;pre&gt;&lt;code&gt;jspm bundle-sfx app build/app.js&lt;/pre&gt;&lt;/code&gt;
+... that&amp;#39;s it. Seriously you only have to run this command and you&amp;#39;ll get a script file which is completely independent of jspm/systemjs.
+To test this we will change or index.html to:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;My First Angular2 App&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;node_modules/angular2/bundles/angular2-polyfills.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;jspm_packages/system.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;config.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;app&amp;gt;&amp;lt;/app&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;build/app.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And you are good to go. If you want to now more about bundling, check out the &lt;a href=&quot;https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md&quot;&gt;production workflow repo of jspm&lt;/a&gt;.
+&lt;br/&gt;&lt;br/&gt;To get more informations about the package that we used, please go to: &lt;a href=&quot;http://jspm.io/&quot;&gt;Jspm&lt;/a&gt;, &lt;a href=&quot;https://github.com/systemjs/systemjs&quot;&gt;SystemJS&lt;/a&gt; or &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</title>
-   <link href="http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup/"/>
+   <link href="http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1/"/>
    <updated>2016-01-28T00:00:00+01:00</updated>
-   <id>http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup</id>
-   <content type="html">&lt;p&gt;This blog post will be about the setup of angular 2 with jspm and systemjs. In this post we will use the angular version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.
+   <id>http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1</id>
+   <content type="html">&lt;p&gt;This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.&lt;/p&gt;
+
 &lt;h2&gt;Prerequisites&lt;/h2&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version: &amp;gt;=2&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Node&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version &gt;= 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Node&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
 &lt;h2&gt;Setting Up Atom&lt;/h2&gt;
-If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;. Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.
+
+&lt;p&gt;If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;.
+Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.&lt;/p&gt;
+
 &lt;h2&gt;Setting up the Project&lt;/h2&gt;
-At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:
-&lt;br /&gt;&lt;pre&gt;&lt;code&gt;npm install jspm -g&lt;br /&gt;jspm init -y&lt;/pre&gt;&lt;/code&gt;
-The npm install is used to get jspm which will install our frontend package manager.&lt;br /&gt; For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
-&lt;br /&gt;JSPM init is used to initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
-After you have executed these commands create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
+
+&lt;p&gt;At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install jspm -g
+jspm init -y&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The npm install is used to get jspm which will install our frontend package manager. For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
+&lt;br /&gt;JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
+After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
 &lt;br/&gt;
-Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:
-&lt;pre&gt;&lt;code&gt;&lt;code&gt;typescriptOptions: {
-    &amp;quot;tsconfig&amp;quot;: true // indicates that a tsconfig exists that should be used
-  },
-  packages: {
-    &amp;quot;app&amp;quot;: { // all files within the app folder
-      &amp;quot;main&amp;quot;: &amp;quot;bootstrap&amp;quot;, // main file of the package (will be important later)
-      &amp;quot;format&amp;quot;: &amp;quot;system&amp;quot;, // module format
-      &amp;quot;defaultExtension&amp;quot;: &amp;quot;ts&amp;quot;, // default extension of all files
-      &amp;quot;meta&amp;quot;: {
-        &amp;quot;*.ts&amp;quot;: { // all ts files will be loaded with the ts loader
-          &amp;quot;loader&amp;quot;: &amp;quot;ts&amp;quot;
-        },
-      }
-    }
-  },
-&lt;/code&gt;
-&lt;/pre&gt;&lt;/code&gt;
-File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js&quot;&gt;config.js&lt;/a&gt;&lt;br/&gt;
-And finally we will create &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/tsconfig.json&quot;&gt;tsconfig&lt;/a&gt; file within our root folder. This file is used to give the typescript compiler some informations about our environment.
-&lt;pre&gt;&lt;code&gt;
-&lt;code&gt;{
- &amp;quot;compilerOptions&amp;quot;: {
-    &amp;quot;target&amp;quot;: &amp;quot;es5&amp;quot;,                /* target of the compilation (es5) */
-    &amp;quot;module&amp;quot;: &amp;quot;system&amp;quot;,             /* System.register([dependencies], function) (in JS)*/
-    &amp;quot;moduleResolution&amp;quot;: &amp;quot;node&amp;quot;,     /* how module gets resolved (needed for Angular 2)*/
-    &amp;quot;emitDecoratorMetadata&amp;quot;: true,  /* needed for decorators */
-    &amp;quot;experimentalDecorators&amp;quot;: true, /* needed for decorators */ (@Injectable)
-    &amp;quot;noImplicitAny&amp;quot;: false          /* any has to be written explicity*/
-  },
-  &amp;quot;exclude&amp;quot;: [   /* since compiling these packages could take ages, we want to ignore them*/
-    &amp;quot;jspm_packages&amp;quot;,
-    &amp;quot;node_modules&amp;quot;
-  ],
-  &amp;quot;compileOnSave&amp;quot;: false        /* on default the compiler will create js files */
-}&lt;/code&gt;
-&lt;/pre&gt;&lt;/code&gt;
-File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt;&lt;br/&gt;
+Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;typescriptOptions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;tsconfig&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// indicates that a tsconfig exists that should be used&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// all files within the app folder&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;main&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;bootstrap&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// main file of the package (will be important later)&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;format&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;system&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// module format&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;defaultExtension&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ts&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// default extension of all files&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;meta&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;*.ts&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// all ts files will be loaded with the ts loader&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;loader&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ts&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js&quot;&gt;config.js&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+And finally we will create a &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt; file within our root folder. This file is used to give the typescript compiler some informations about our environment.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s2&quot;&gt;&amp;quot;compilerOptions&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;target&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;es5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;                &lt;span class=&quot;cm&quot;&gt;/* target of the compilation (es5) */&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;module&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;system&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;             &lt;span class=&quot;cm&quot;&gt;/* System.register([dependencies], function) (in JS)*/&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;moduleResolution&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;node&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/* how module gets resolved (needed for Angular 2)*/&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;emitDecoratorMetadata&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* needed for decorators */&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;experimentalDecorators&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* needed for decorators (@Injectable) */&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;noImplicitAny&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/* any has to be written explicity*/&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;exclude&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;   &lt;span class=&quot;cm&quot;&gt;/* since compiling these packages could take ages, we want to ignore them*/&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;jspm_packages&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;node_modules&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;compileOnSave&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;        &lt;span class=&quot;cm&quot;&gt;/* on default the compiler will create js files */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
 &lt;b&gt;Note: &lt;/b&gt;The comments in the tsconfig file might give you an error, so you better delete them.
-&lt;br/&gt;&lt;br/&gt;To get all the packages we need for development, we will use jspm install. To find out what packages are currently available with the jspm installer you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:
+&lt;br/&gt;&lt;br/&gt;To get all the packages we need for development, we will use jspm install.
+To find out what packages are currently available with the jspm installer
+you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:
 &lt;pre&gt;&lt;code&gt;jspm install ts &lt;br/&gt;jspm install angular2&lt;/pre&gt;&lt;/code&gt;
-The first command is used to install the typescript plugin which is used for our ts loader, that you can see above.
+The first command will install the typescript plugin which is used for our ts loader, that you can see above.
 &lt;br/&gt;&lt;br/&gt;
-Normally this is everything you need for your project setup but there is currently an error with the &lt;a href=&quot;https://github.com/Microsoft/TypeScript/issues/6012&quot;&gt;module resolution&lt;/a&gt;. So we need to at the following lines to our package.json file:
-&lt;pre&gt;&lt;code&gt;
-&lt;code&gt;&amp;quot;dependencies&amp;quot;: {
-    &amp;quot;angular2&amp;quot;: &amp;quot;2.0.0-beta.1&amp;quot;,
-    &amp;quot;es6-promise&amp;quot;: &amp;quot;^3.0.2&amp;quot;,
-    &amp;quot;es6-shim&amp;quot;: &amp;quot;^0.33.3&amp;quot;,
-    &amp;quot;reflect-metadata&amp;quot;: &amp;quot;0.1.2&amp;quot;,
-    &amp;quot;rxjs&amp;quot;: &amp;quot;5.0.0-beta.0&amp;quot;,
-    &amp;quot;zone.js&amp;quot;: &amp;quot;0.5.10&amp;quot;
-}&lt;/code&gt;
-&lt;/pre&gt;&lt;/code&gt;
-File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt;&lt;br/&gt;
-Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis will throw errors as soon as we import a module from the angular2 package.
-&lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so i would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
+Normally this is everything you need for your project setup, but there is currently an error with the &lt;a href=&quot;https://github.com/Microsoft/TypeScript/issues/6012&quot;&gt;module resolution&lt;/a&gt;.
+So we need to add the following lines to our package.json file:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;angular2&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2.0.0-beta.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;es6-promise&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^3.0.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;es6-shim&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^0.33.3&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;reflect-metadata&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.1.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;rxjs&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;5.0.0-beta.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;zone.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.5.10&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis would throw errors as soon as we import a module from the angular2 package.
+&lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install, &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so I would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
 &lt;h2&gt;Writing Some Code&lt;/h2&gt;
-Now that we&amp;#39;ve got everything wired up we will write some code. At first we create a index.html file at our root folder with the following code:
-&lt;pre&gt;&lt;code&gt;
-&lt;code&gt;&amp;lt;!doctype html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;title&amp;gt;My First Angular2 App&amp;lt;/title&amp;gt;
-  &amp;lt;script src=&amp;quot;node_modules/angular2/bundles/angular2-polyfills.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-  &amp;lt;script src=&amp;quot;jspm_packages/system.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-  &amp;lt;script src=&amp;quot;config.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- this will be our entry component for the application --&amp;gt;
-  &amp;lt;app&amp;gt;&amp;lt;/app&amp;gt;
-  &amp;lt;script&amp;gt;
-    System.import(&amp;#39;app&amp;#39;).then(null, console.error.bind(console));
-  &amp;lt;/script&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;&lt;/code&gt;
-&lt;/pre&gt;&lt;/code&gt;
-Next we will create the bootstrap.ts file in the app directory:
-&lt;pre&gt;&lt;code&gt;
-import { bootstrap } from &amp;#39;angular2/platform/browser&amp;#39;;
-import {AppComponent} from &amp;quot;./app.component&amp;quot;;
-bootstrap(AppComponent);
-&lt;/pre&gt;&lt;/code&gt;
-and the corresponding app.component.ts file
-&lt;pre&gt;&lt;code&gt;
-import {Component} from &amp;#39;angular2/core&amp;#39;;
-@Component({
-  selector: &amp;#39;app&amp;#39;,
-  template: &amp;#39;&lt;code&gt;&amp;lt;p&amp;gt;Hello World&amp;lt;/p&amp;gt;&lt;/code&gt;&amp;#39;
-})
-export class AppComponent {
-  constructor() { }
-}
-&lt;/pre&gt;&lt;/code&gt;
-Finally our folder structure should look something like this:
+Now that we&amp;#39;ve got everything wired up we will write some code. At first we&amp;#39;ll create a index.html file at our root folder with the following code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;My First Angular2 App&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;node_modules/angular2/bundles/angular2-polyfills.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;jspm_packages/system.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;config.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- this will be our entry component for the application --&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;app&amp;gt;&amp;lt;/app&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;app&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Next we will create the bootstrap.ts file in the app directory:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bootstrap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/platform/browser&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AppComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;./app.component&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AppComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;and the corresponding app.component.ts file&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;Component&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+@Component&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  selector: &lt;span class=&quot;s1&quot;&gt;&amp;#39;app&amp;#39;&lt;/span&gt;,
+  template: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &amp;lt;p&amp;gt;Hello World&amp;lt;/p&amp;gt;
+  &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class AppComponent &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  constructor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally our folder structure should look something like this:
 &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_final(part 1).PNG&quot;&gt;
 &lt;h2&gt;Running The Application&lt;/h2&gt;
 To run our Application we execute the following commands:
 &lt;pre&gt;&lt;code&gt;npm install live-server -g &lt;br/&gt;live-server&lt;/pre&gt;&lt;/code&gt;
-This will start our application and print hello world on your browser. if you had any issues with this tutorial feel free to contact me.
-&lt;br/&gt;&lt;/br&gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we don&amp;#39;t have to wait 5 seconds until every change to our app is published. Furthermore we will use the bundling of jspm to generate a minified js file of our application.&lt;/p&gt;
+This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
+&lt;br/&gt;&lt;/br&gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we
+don&amp;#39;t have to wait 5 seconds until every change to our app is published.
+Furthermore we will use the bundling of jspm to generate an independent js file of our application.&lt;/p&gt;
 </content>
  </entry>
  

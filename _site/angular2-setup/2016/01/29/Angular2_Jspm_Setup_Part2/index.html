@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2) &middot; Mario Brendel
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Mario Brendel
+        </a>
+      </h1>
+      <p class="lead">Blog About Angular2</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/Angular2-Tutorials/">Angular2-Tutorials</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <br />
+      <!-- <a class="sidebar-nav-item" href="https://github.com/MarioBrendel/archive/v.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/MarioBrendel">GitHub</a>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</h1>
+  <span class="post-date">29 Jan 2016</span>
+  <p>In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
+Whenever you have problems with this tutorial, you can look up the code at <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed">Github</a> or contact me :).
+<h2>Implementing SystemJS-Hot-Reloader</h2>
+You may ask yourself what SystemJS actually is. Well you&#39;ve already used it in your index.html file together with the config.js:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">[index.html]
+...
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">));</span>
+<span class="nt">&lt;/script&gt;</span>
+...</code></pre></div>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">[</span><span class="nx">config</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span>
+<span class="p">...</span>
+  <span class="s2">&quot;app&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// all files within the app folder</span>
+  <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;bootstrap&quot;</span><span class="p">,</span> <span class="c1">// main file of the package (will be important later)</span>
+  <span class="s2">&quot;format&quot;</span><span class="o">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="c1">// module format</span>
+<span class="p">...</span></code></pre></div>
+
+<p>This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line &quot;format&quot;: &quot;system&quot;. <br/><br/>
+Now lets extend our <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a> with the following lines:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;chokidar-socket-emitter&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.4.2&quot;</span><span class="p">,</span> <span class="c1">// event source for systemjs-hot-reloader</span>
+    <span class="s2">&quot;http-server&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.8.5&quot;</span><span class="p">,</span>             <span class="c1">// basic http-server</span>
+    <span class="s2">&quot;open&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.5&quot;</span>                      <span class="c1">// will automaticly open our page on the given port</span>
+<span class="p">},</span></code></pre></div>
+
+<p>And run <pre><code>npm install --dev</pre></code>
+After you have executed these commands run the following line
+<pre><code>jspm install systemjs-hot-reloader</pre></code>
+This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
+the entire app. For more information see <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>. <br/> <br/></p>
+
+<p>Now lets create a server.js file within our root folder that will combine our http-server with the chokidar-socket-emitter:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span>
+<span class="kr">const</span> <span class="nx">httpServer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http-server&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">open</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">)</span>
+
+<span class="kd">let</span> <span class="nx">cache</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;production&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;running in production mode(with caching)-make sure you have &quot;Disable cache (while DevTools is open)&quot; checked in the browser to see the changes while developing&#39;</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">cache</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">httpServer</span><span class="p">.</span><span class="nx">createServer</span><span class="p">({</span>
+  <span class="nx">root</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+  <span class="nx">cache</span><span class="o">:</span> <span class="nx">cache</span><span class="p">,</span>
+  <span class="nx">robots</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Access-Control-Allow-Origin&#39;</span><span class="o">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span><span class="o">:</span> <span class="s1">&#39;true&#39;</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;chokidar-socket-emitter&#39;</span><span class="p">)({</span><span class="nx">app</span><span class="o">:</span> <span class="nx">server</span><span class="p">.</span><span class="nx">server</span><span class="p">})</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9089</span><span class="p">)</span>
+<span class="nx">open</span><span class="p">(</span><span class="s1">&#39;http://localhost:9089&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>To actually use the server.js file we&#39;ll implement the following lines in our package.json:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;node server&quot;</span>
+  <span class="p">},</span></code></pre></div>
+
+<p>Last but not least we will update our index.html:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>My First Angular2 App<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;node_modules/angular2/bundles/angular2-polyfills.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;jspm_packages/system.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;config.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;app&gt;&lt;/app&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">readyForMainLoad</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/localhost/</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">System</span><span class="p">.</span><span class="nx">trace</span> <span class="o">=</span> <span class="kc">true</span>
+      <span class="nx">readyForMainLoad</span> <span class="o">=</span> <span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;systemjs-hot-reloader&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">HotReloader</span><span class="p">){</span>
+        <span class="nx">hr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HotReloader</span><span class="p">.</span><span class="k">default</span><span class="p">(</span><span class="s1">&#39;http://localhost:9089&#39;</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">readyForMainLoad</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;running&quot;</span><span class="p">)</span> <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<p>As soon as you run your app on localhost, the SystemJS-Hot-Reloader will be used. If you are running
+the app in production the reloader won&#39;t be used.<br/>
+<h2>Running The Application</h2>
+Finally we will run our app with
+<pre><code>npm start</pre></code>
+And if everything went right, you should be able to hot reload your application.
+<img src="../../../../../public/gifs/hot-reloading.gif">
+<b>Note </b>that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
+<h2>Bundling Our Application</h2>
+This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
+with jspm.
+ <pre><code>jspm bundle-sfx app build/app.js</pre></code>
+... that&#39;s it. Seriously you only have to run this command and you&#39;ll get a script file which is completely independent of jspm/systemjs.
+To test this we will change or index.html to:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>My First Angular2 App<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;node_modules/angular2/bundles/angular2-polyfills.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;jspm_packages/system.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;config.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;app&gt;&lt;/app&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;build/app.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<p>And you are good to go. If you want to now more about bundling, check out the <a href="https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md">production workflow repo of jspm</a>.
+<br/><br/>To get more informations about the package that we used, please go to: <a href="http://jspm.io/">Jspm</a>, <a href="https://github.com/systemjs/systemjs">SystemJS</a> or <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>.</p>
+
+</div>
+
+    <div id="disqus_thread"></div>
+      <script>
+      /**
+      * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+      * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+      */
+      /*
+      var disqus_config = function () {
+      this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+
+      s.src = '//mariobrendel.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+    </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    <ul>
+      
+        
+      
+        
+          
+            
+              <li><a href="/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1/">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</a><br /></li>
+              
+        
+      
+    </ul>
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
