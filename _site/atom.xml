@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://mario-brendel.com/atom.xml" rel="self"/>
  <link href="http://mario-brendel.com/"/>
- <updated>2016-01-30T00:07:11+01:00</updated>
+ <updated>2016-01-30T13:48:10+01:00</updated>
  <id>http://mario-brendel.com</id>
  <author>
    <name>Mario Brendel</name>
@@ -156,7 +156,7 @@ To test this we will change or index.html to:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version &gt;= 2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Node&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;NodeJS version &gt;= 4&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Setting Up Atom&lt;/h2&gt;

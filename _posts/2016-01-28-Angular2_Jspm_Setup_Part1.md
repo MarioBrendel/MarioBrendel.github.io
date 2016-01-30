@@ -12,7 +12,7 @@ This blog post will be about the setup of Angular 2 with jspm and systemjs. In t
 <h2>Prerequisites</h2>
 <ul>
 <li><a href="https://www.npmjs.com/package/npm">NPM version >= 2</a></li>
-<li><a href="https://nodejs.org/en/download/">Node</a></li>
+<li><a href="https://nodejs.org/en/download/">NodeJS version >= 4</a></li>
 </ul>
 <h2>Setting Up Atom</h2>
 If you haven't already downloaded atom, please navigate to: [atom.io](https://atom.io).
