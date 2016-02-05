@@ -15,7 +15,7 @@ baseurl:          /
 
 author:
   name:           Mario Brendel
-  url:
+  url:            mariob@mario-brendel.com
 
 paginate:         5
 gems:             [jekyll-paginate]
@@ -26,3 +26,6 @@ paginate_path:    "page:num"
 
 github:
   repo:           https://github.com/MarioBrendel
+
+feed:
+  path: atom.xml

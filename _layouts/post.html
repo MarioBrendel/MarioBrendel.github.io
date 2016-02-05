@@ -7,6 +7,25 @@ layout: default
   <span class="post-date">{{ page.date | date_to_string }}</span>
   {{ content }}
 </div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    <ul>
+      {% for post in site.posts %}
+        {% if post.url != page.url %}
+          {% for tag in page.tags %}
+            {% if post.tags contains tag %}
+              <li><a href="{{ post.url }}">{{ post.title }}</a><br /></li>
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </ul>
+</div>
+
 {% if page.comments %}
     <div id="disqus_thread"></div>
       <script>
@@ -31,24 +50,6 @@ layout: default
     </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 {% endif %}
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    <ul>
-      {% for post in site.posts %}
-        {% if post.url != page.url %}
-          {% for tag in page.tags %}
-            {% if post.tags contains tag %}
-              <li><a href="{{ post.url }}">{{ post.title }}</a><br /></li>
-              {% break %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </ul>
-</div>
 <hr/>
 <div style="font-size:15px; text-align: center">
   Copyright © 2016 - Mario Brendel Blog content licensed under the Creative Commons CC BY 2.5 | Unless otherwise stated or granted, code samples licensed under the MIT license. |

@@ -4,7 +4,7 @@ title: Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 
 date: 2016-01-29
 author: Mario Brendel
 comments: true
-categories: [Angular2-Setup]
+categories: [Setup]
 tags: [Angular2-Setup-JSPM]
 ---
 In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
@@ -117,7 +117,7 @@ the app in production the reloader won't be used.<br/>
 Finally we will run our app with
 <pre><code>npm start</pre></code>
 And if everything went right, you should be able to hot reload your application.
-<img src="../../../../../public/gifs/hot-reloading.gif">
+![hot-reloading example]({{ site.url }}/public/gifs/hot-reloading.gif)
 <b>Note </b>that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
 <h2>Bundling Our Application</h2>
 This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
@@ -143,4 +143,4 @@ To test this we will change or index.html to:
 {% endhighlight %}
 
 And you are good to go. If you want to now more about bundling, check out the [production workflow repo of jspm](https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md).
-<br/><br/>To get more informations about the package that we used, please go to: [Jspm](http://jspm.io/), [SystemJS](https://github.com/systemjs/systemjs) or [SystemJS-Hot-Reloader](https://github.com/capaj/systemjs-hot-reloader).
+<br/><br/>To get more information's about the package that we used, please go to: [Jspm](http://jspm.io/), [SystemJS](https://github.com/systemjs/systemjs) or [SystemJS-Hot-Reloader](https://github.com/capaj/systemjs-hot-reloader).

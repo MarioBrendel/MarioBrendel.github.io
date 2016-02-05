@@ -4,7 +4,7 @@ title: Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 
 date: 2016-01-28
 author: Mario Brendel
 comments: true
-categories: [Angular2-Setup]
+categories: [Setup]
 tags: [Angular2-Setup-JSPM]
 ---
 This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.
@@ -28,7 +28,7 @@ jspm init -y
 
 The npm install is used to get jspm which will install our frontend package manager. For more information see: [JSPM](http://jspm.io/)
 <br />JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.</pre><br /><br />
-After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: <img src="../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG">
+After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: ![folder structure]({{ site.url }}/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG)
 <br/>
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:
 
@@ -143,7 +143,7 @@ export class AppComponent {
 {% endhighlight %}
 
 Finally our folder structure should look something like this:
-<img src="../../../../../public/images/2016-01-28-Setup/Setup_final(part 1).PNG">
+![final setup]({{ site.url }}/public/images/2016-01-28-Setup/Setup_final(part 1).PNG)
 <h2>Running The Application</h2>
 To run our Application we execute the following commands:
 <pre><code>npm install live-server -g <br/>live-server</pre></code>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Mario Brendel</title>
- <link href="http://mario-brendel.com/atom.xml" rel="self"/>
- <link href="http://mario-brendel.com/"/>
- <updated>2016-01-31T17:29:31+01:00</updated>
- <id>http://mario-brendel.com</id>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2016-02-05T13:38:17+01:00</updated>
+ <id>http://localhost:4000</id>
  <author>
    <name>Mario Brendel</name>
    <email></email>
@@ -13,10 +13,354 @@
 
  
  <entry>
+   <title>Lets create a social media app (Part 1 - The Forms)</title>
+   <link href="http://localhost:4000/forms/2016/02/03/The_Form/"/>
+   <updated>2016-02-03T00:00:00+01:00</updated>
+   <id>http://localhost:4000/forms/2016/02/03/The_Form</id>
+   <content type="html">&lt;p&gt;In this tutorial series we&amp;#39;ll try to build a social media app with Angular 2.
+This application will be like a stripped down Facebook. So there will be a register-/login form, profiles and so on.
+The great thing about this app is that we can use all of the core features of Angular2. So lets dive right into it.
+If you want to have the same styles as I have, you need to use: &lt;a href=&quot;https://bootswatch.com/paper/bootstrap.min.css&quot;&gt;bootstrap-paper-css&lt;/a&gt;.
+&lt;br/&gt; &lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Since there are already a lot of really good basic tutorials I may not explain everything.
+If you have trouble to follow, feel free to checkout the &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 form&lt;/a&gt; and &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/template-syntax.html&quot;&gt;Angular2 template syntax&lt;/a&gt; guide.
+&lt;h2&gt;Goal Of This Part&lt;/h2&gt;
+In this part we want to build a form that will look like this:
+&lt;img src=&quot;http://localhost:4000/public/gifs/form_in_action.gif&quot; alt=&quot;example form&quot;&gt;
+At first we&amp;#39;ll program a little example with &lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/Control-class.html&quot;&gt;Control&lt;/a&gt;,
+&lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/ControlGroup-class.html&quot;&gt;Controlgroups&lt;/a&gt; and
+&lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/Validators-class.html&quot;&gt;Validators&lt;/a&gt; to see how they work.
+After that we&amp;#39;ll write our own custom controls and validators which will be more efficient for our use case.
+&lt;h2&gt;The First Field&lt;/h2&gt;
+Before we get to the coding part make sure you have a folder structure like this:
+&lt;img src=&quot;http://localhost:4000/public/images/Social-Media-App(Part%201%20-%20The%20Forms)/starting_folder_structure.PNG&quot; alt=&quot;folder-structure&quot;&gt;
+The app.component.ts file is pretty straight forward:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; RegisterComponent &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s2&quot;&gt;&amp;quot;./form/register.component&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Component &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+@Component&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  selector: &lt;span class=&quot;s1&quot;&gt;&amp;#39;app&amp;#39;&lt;/span&gt;,
+  directives: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;RegisterComponent&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+  template: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &amp;lt;register-form&amp;gt;&amp;lt;/register-form&amp;gt;
+  &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class AppComponent &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  constructor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you don&amp;#39;t know what the bootstrap.ts is, read my &lt;a href=&quot;http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1&quot;&gt;Angular2 setup tutorial&lt;/a&gt;.
+&lt;br/&gt;Don&amp;#39;t be scared if you get an error at the moment. Its because we haven&amp;#39;t created the Registercomponent. &lt;br\&gt; &lt;br\&gt;&lt;/p&gt;
+
+&lt;p&gt;As you may have experienced, forms can get really big and intimidating. So lets take a look at a basic register form
+with only 1 field that behaves similarly to the example above:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Component, OnInit &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormBuilder, Validators, ControlGroup &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/common&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+@Component&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  selector: &lt;span class=&quot;s1&quot;&gt;&amp;#39;register-form&amp;#39;&lt;/span&gt;,
+  template: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;container&amp;quot;&lt;/span&gt;&amp;gt;
+    &amp;lt;form &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormModel&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;registerForm&amp;quot;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ngSubmit&lt;span class=&quot;o&quot;&gt;)=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;onSubmit()&amp;quot;&lt;/span&gt;
+          &lt;span class=&quot;c&quot;&gt;#regForm=&amp;quot;ngForm&amp;quot;&amp;gt;&lt;/span&gt;
+
+      &amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!regForm.form.find(&amp;#39;username&amp;#39;).valid&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;                                                  &amp;amp;&amp;amp; regForm.form.find(&amp;#39;username&amp;#39;).dirty&amp;quot;&lt;/span&gt;&amp;gt;
+        &amp;lt;label &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&amp;gt;Username&amp;lt;/label&amp;gt;
+        &amp;lt;input &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;text &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;
+              &lt;span class=&quot;nv&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormControl&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;username&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt;
+
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hidden&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;username&amp;#39;).untouched ||&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;                     regForm.form.find(&amp;#39;username&amp;#39;).valid&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;alert alert-danger&amp;quot;&lt;/span&gt;&amp;gt;
+
+        Username is required
+      &amp;lt;/div&amp;gt;
+
+      &amp;lt;button &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;submit&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;btn btn-primary&amp;quot;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;disabled&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!regForm.form.find(&amp;#39;username&amp;#39;).valid&amp;quot;&lt;/span&gt;&amp;gt;Submit&amp;lt;/button&amp;gt;
+
+    &amp;lt;/form&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class RegisterComponent implements OnInit &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  private registerForm: ControlGroup&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  constructor&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;private _fb: FormBuilder&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  ngOnInit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: void &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    this.registerForm &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; this._fb.group&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+      username: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, Validators.required&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  onSubmit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: void &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    console.log&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Username: &amp;#39;&lt;/span&gt; + this.registerForm.find&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;username&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;b&gt;Note: &lt;/b&gt; This example only shows 1 field. &lt;br/&gt;
+HOLY COW that&amp;#39;s a lot of code/template for just 1 field. I&amp;#39;ll promise you that at the end of this tutorial this will look way better,
+but for now we leave it as it is and talk a little bit about controls.
+&lt;h2&gt;How Controls Work&lt;/h2&gt;
+Controls are pretty straight forward in Angular2. You could create a Controlgroup like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;this.username &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+this.email &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+this.password &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+this.telephone &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+this.formControl &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new ControlGroup&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  username: this.username,
+  email: this.email,
+  password: this.password,
+  telephone: this.telephone
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So what&amp;#39;s happening here? At first we&amp;#39;ve created our Control objects with an empty string and a validator.
+The empty string is the initial value of that control.
+The second parameter tells us that the field on which the control is applied is required.
+For example if you apply the username control on a username input field it would be invalid as long as no username has been entered.
+But we don&amp;#39;t want to watch only a single input field, instead we are interested in the whole form.
+To achieve that we just wrap the form control around all controls that are important.
+&lt;br/&gt;Since this is a lot of code we can shorten this a little bit by injecting the formbuilder and use him like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;constructor&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;private _fb: FormBuilder&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  this.registerForm &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; this._fb.group&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+    username: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, Validators.required&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+    email: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, Validators.required&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+    telephone: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, Validators.required&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+    password: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, Validators.required&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is the equivalent to the code given above.
+&lt;br/&gt; You want to know a little bit more about this topic? Then go to: &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 - Forms&lt;/a&gt;
+&lt;h2&gt;Build Form Field Components&lt;/h2&gt;
+To shorten our register component we want to encapsulate this code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!regForm.form.find(&amp;#39;username&amp;#39;).valid&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;                                                  &amp;amp;&amp;amp; regForm.form.find(&amp;#39;username&amp;#39;).dirty&amp;quot;&lt;/span&gt;&amp;gt;
+        &amp;lt;label &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&amp;gt;Username&amp;lt;/label&amp;gt;
+        &amp;lt;input &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;text &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;
+              &lt;span class=&quot;nv&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormControl&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;username&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt;
+
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hidden&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;username&amp;#39;).untouched ||&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;                     regForm.form.find(&amp;#39;username&amp;#39;).valid&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;alert alert-danger&amp;quot;&lt;/span&gt;&amp;gt;
+
+        Username is required
+      &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And to use that component we want to have code that looks something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Username&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/formField&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That looks nice, does it? Well let&amp;#39;s see how we can achieve that.
+At first we create a new typescript file under the folder form/field and we call that file Formfield.ts (not the best name but ok for this tutorial).
+The file will look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Component, Input, OnInit &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Control &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/common&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+@Component&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  selector: &lt;span class=&quot;s1&quot;&gt;&amp;#39;formField&amp;#39;&lt;/span&gt;,
+  template: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!control.valid &amp;amp;&amp;amp; control.dirty&amp;quot;&lt;/span&gt;&amp;gt;
+    &amp;lt;label &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;attr.for&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&amp;gt;&lt;span class=&quot;o&quot;&gt;{{&lt;/span&gt;name&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;&amp;lt;/label&amp;gt;
+    &amp;lt;input &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;={{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;  &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;{{name}}&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormControl&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control&amp;quot;&lt;/span&gt;&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;div &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hidden&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control.untouched || control.valid&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;alert alert-danger&amp;quot;&lt;/span&gt;&amp;gt;
+    This field is required.
+  &amp;lt;/div&amp;gt;
+  &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class FormFieldComponent implements OnInit&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  @Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; name: string&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  @Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  @Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; required: boolean&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  @Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; control: Control&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  ngOnInit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: void &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;this.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      this.name +&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot; *&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Let&amp;#39;s take a little deeper look what each part actually does.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!control.valid &amp;amp;&amp;amp; control.dirty&amp;quot;&lt;/span&gt;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This part will color our input field red as soon as the given control is not valid and the value of the input has changed.
+&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;label &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;attr.for&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&amp;gt;&lt;span class=&quot;o&quot;&gt;{{&lt;/span&gt;name&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;&amp;lt;/label&amp;gt;
+    &amp;lt;input &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;{{type}}&amp;quot;&lt;/span&gt;  &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;{{name}}&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormControl&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control&amp;quot;&lt;/span&gt;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here we&amp;#39;re applying the type(text/email...), which came as an input variable, and the control.
+The control is used to validate the field. More on this in the next chapter.
+&lt;br/&gt;&lt;br/&gt; Last but not least we got this snippet:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hidden&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control.untouched || control.valid&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;alert alert-danger&amp;quot;&lt;/span&gt;&amp;gt;
+  This field is required.
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will show the red bar right under the input as soon as the user has touched the input field and it is invalid.
+Wow that was actually pretty easy. Now we can reuse this form field everywhere we want... &lt;b&gt;BUT&lt;/b&gt; wait.
+The error message will always be the same no matter what the actual error actually was. We have to change that.
+Technically we could provide the error message via an input variable to this component, but this wouldn&amp;#39;t be
+a good approach, since we have to declare the same error message every time we want to use the same formfield.
+Furthermore the best approach would be to define our error message within the validator, because he is responsible
+for the given error. So lets see how we can do this.
+&lt;h2&gt;Build Custom Validations and Controls&lt;/h2&gt;
+As we&amp;#39;ve seen before, our error message is fix. To get around that we&amp;#39;ll first build a custom validator.
+This validator will check if our username starts with a letter and has at least 3 characters.
+We place our formfieldvalidator.service.ts file right under the validation folder.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Control &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/common&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Injectable &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;interface ValidationResult &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  message: string&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+@Injectable&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class FormFieldValidationService &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  constructor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+
+  validateUserName&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;control: Control&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: ValidationResult &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    const &lt;span class=&quot;nv&quot;&gt;startsWithLetter_regex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; /^&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;a-zA-Z&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;/&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;!control.value.match&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;startsWithLetter_regex&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;message: &lt;span class=&quot;s2&quot;&gt;&amp;quot;Username has to start with a letter&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;control.value.length &amp;lt; 3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;message: &lt;span class=&quot;s2&quot;&gt;&amp;quot;Username must have more than 3 letters&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Ok now I&amp;#39;m pretty sure you have a couple of questions. Why do we need that interface?
+Firstly we are a little bit more expressive with our expected return. But this doesn&amp;#39;t explain
+why we are returning an object anyway. Why not a string? Well for that we have to look in the AbstractControl
+class (the Control class inherits from AbstractControl):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export declare &lt;/span&gt;abstract class AbstractControl &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+...
+errors: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key: string&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;: any&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see the error field is just a map where each key is a string and the value can be anything.
+This is important because we can actually override that field and add
+the desired behavior. So lets do this by creating our custom Control within the form/control folder and
+call it FormControl.ts :&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Control &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/common&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; ValidationResult &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;../validation/formvalidator.service&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class FormControl extends Control &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  errors: ValidationResult&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  get errorMessage&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: string &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;this.errors !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; null &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; this.errors.message !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; null&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; this.errors.message&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Ok, cool. Now our errors will contain of ValidationResults(which are currently only strings). These Results
+have a message that we access via our getter. Wow that was a lot of stuff and not that easy to understand.
+If you want you can check my &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Social-Media-App&quot;&gt;Github repo&lt;/a&gt; and take your 10minutes to grasp everything.
+I&amp;#39;m not sure either if that is best practice but I&amp;#39;m actually pretty satisfied with the result.
+If we put everything together our final register form looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormControl &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s2&quot;&gt;&amp;quot;./contol/FormControl&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormFieldComponent &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s2&quot;&gt;&amp;quot;./field/formfield.component&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Component, OnInit &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/core&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; ControlGroup &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;angular2/common&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormFieldValidationService &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s1&quot;&gt;&amp;#39;./validation/formvalidator.service&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+@Component&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+  selector: &lt;span class=&quot;s1&quot;&gt;&amp;#39;register-form&amp;#39;&lt;/span&gt;,
+  directives: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;FormFieldComponent&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+  providers: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;FormFieldValidationService&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+  template: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;container&amp;quot;&lt;/span&gt;&amp;gt;
+  &amp;lt;form &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormModel&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;registerForm&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ngSubmit&lt;span class=&quot;o&quot;&gt;)=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;onSubmit()&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;#regForm=&amp;quot;ngForm&amp;quot;&amp;gt;&lt;/span&gt;
+
+    &amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Username&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;username&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/formField&amp;gt;
+
+    &amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Email&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;email&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt; &amp;lt;/formField&amp;gt;
+
+    &amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Telephone&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;telephone&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt; &amp;lt;/formField&amp;gt;
+
+    &amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Password&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;password&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;regForm.form.find(&amp;#39;password&amp;#39;)&amp;quot;&lt;/span&gt;&amp;gt; &amp;lt;/formField&amp;gt;
+
+    &amp;lt;button &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;submit&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;btn btn-primary&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;disabled&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!regForm.form.valid&amp;quot;&lt;/span&gt;&amp;gt;Submit&amp;lt;/button&amp;gt;
+
+  &amp;lt;/form&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;class RegisterComponent implements OnInit &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  private registerForm: ControlGroup&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  constructor&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;private _validationService: FormFieldValidationService&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+
+  ngOnInit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: void &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    this.registerForm &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new ControlGroup&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
+      username: new FormControl&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, this._validationService.validateUserName&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+      email: new FormControl&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, this._validationService.validateEmail&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+      telephone: new FormControl&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, this._validationService.validateTelephoneNumber&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+      password: new FormControl&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, this._validationService.validatePassword&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  onSubmit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: void &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    console.log&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Username: &amp;#39;&lt;/span&gt; + this.registerForm.find&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;username&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    console.log&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Email: &amp;#39;&lt;/span&gt; + this.registerForm.find&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    console.log&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Telephone: &amp;#39;&lt;/span&gt; + this.registerForm.find&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;telephone&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Lastly you have to change the control within the FormFieldComponent to:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;@Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; control: FormControl&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Wow this looks way better than our first register component :). &lt;br/&gt;
+&lt;b&gt;Note: &lt;/b&gt;We can&amp;#39;t use the formbuilder anymore. I&amp;#39;m not entirely sure why it&amp;#39;s not working,
+but this code isn&amp;#39;t more complex than the code with the formbuilder. &lt;br/&gt; &lt;br/&gt;
+Since I haven&amp;#39;t shown all validators you may want to visit my &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Social-Media-App&quot;&gt;Github page&lt;/a&gt;
+I hope you liked this tutorial. If you have any questions feel free to ask me.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</title>
-   <link href="http://mario-brendel.com/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2/"/>
+   <link href="http://localhost:4000/setup/2016/01/29/Angular2_Jspm_Setup_Part2/"/>
    <updated>2016-01-29T00:00:00+01:00</updated>
-   <id>http://mario-brendel.com/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2</id>
+   <id>http://localhost:4000/setup/2016/01/29/Angular2_Jspm_Setup_Part2</id>
    <content type="html">&lt;p&gt;In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
 Whenever you have problems with this tutorial, you can look up the code at &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed&quot;&gt;Github&lt;/a&gt; or contact me :).
 &lt;h2&gt;Implementing SystemJS-Hot-Reloader&lt;/h2&gt;
@@ -117,7 +461,7 @@ the app in production the reloader won&amp;#39;t be used.&lt;br/&gt;
 Finally we will run our app with
 &lt;pre&gt;&lt;code&gt;npm start&lt;/pre&gt;&lt;/code&gt;
 And if everything went right, you should be able to hot reload your application.
-&lt;img src=&quot;../../../../../public/gifs/hot-reloading.gif&quot;&gt;
+&lt;img src=&quot;http://localhost:4000/public/gifs/hot-reloading.gif&quot; alt=&quot;hot-reloading example&quot;&gt;
 &lt;b&gt;Note &lt;/b&gt;that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
 &lt;h2&gt;Bundling Our Application&lt;/h2&gt;
 This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
@@ -141,15 +485,15 @@ To test this we will change or index.html to:&lt;/p&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And you are good to go. If you want to now more about bundling, check out the &lt;a href=&quot;https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md&quot;&gt;production workflow repo of jspm&lt;/a&gt;.
-&lt;br/&gt;&lt;br/&gt;To get more informations about the package that we used, please go to: &lt;a href=&quot;http://jspm.io/&quot;&gt;Jspm&lt;/a&gt;, &lt;a href=&quot;https://github.com/systemjs/systemjs&quot;&gt;SystemJS&lt;/a&gt; or &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;.&lt;/p&gt;
+&lt;br/&gt;&lt;br/&gt;To get more information&amp;#39;s about the package that we used, please go to: &lt;a href=&quot;http://jspm.io/&quot;&gt;Jspm&lt;/a&gt;, &lt;a href=&quot;https://github.com/systemjs/systemjs&quot;&gt;SystemJS&lt;/a&gt; or &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;.&lt;/p&gt;
 </content>
  </entry>
  
  <entry>
    <title>Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</title>
-   <link href="http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1/"/>
+   <link href="http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1/"/>
    <updated>2016-01-28T00:00:00+01:00</updated>
-   <id>http://mario-brendel.com/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1</id>
+   <id>http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1</id>
    <content type="html">&lt;p&gt;This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.&lt;/p&gt;
 
 &lt;h2&gt;Prerequisites&lt;/h2&gt;
@@ -173,7 +517,7 @@ jspm init -y&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The npm install is used to get jspm which will install our frontend package manager. For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
 &lt;br /&gt;JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
-After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot;&gt;
+After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot; alt=&quot;folder structure&quot;&gt;
 &lt;br/&gt;
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:&lt;/p&gt;
 
@@ -276,7 +620,7 @@ Now that we&amp;#39;ve got everything wired up we will write some code. At first
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Finally our folder structure should look something like this:
-&lt;img src=&quot;../../../../../public/images/2016-01-28-Setup/Setup_final(part 1).PNG&quot;&gt;
+&lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_final(part%201).PNG&quot; alt=&quot;final setup&quot;&gt;
 &lt;h2&gt;Running The Application&lt;/h2&gt;
 To run our Application we execute the following commands:
 &lt;pre&gt;&lt;code&gt;npm install live-server -g &lt;br/&gt;live-server&lt;/pre&gt;&lt;/code&gt;
