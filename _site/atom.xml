@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2016-02-05T14:13:38+01:00</updated>
+ <updated>2016-02-05T14:21:15+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mario Brendel</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Lets create a social media app (Part 1 - The Forms)</title>
-   <link href="http://localhost:4000/forms/2016/02/03/The_Form/"/>
-   <updated>2016-02-03T00:00:00+01:00</updated>
-   <id>http://localhost:4000/forms/2016/02/03/The_Form</id>
+   <link href="http://localhost:4000/forms/2016/02/05/The_Form/"/>
+   <updated>2016-02-05T00:00:00+01:00</updated>
+   <id>http://localhost:4000/forms/2016/02/05/The_Form</id>
    <content type="html">&lt;p&gt;In this tutorial series we&amp;#39;ll try to build a social media app with Angular 2.
 This application will be like a stripped down Facebook. So there will be a register-/login form, profiles and so on.
 The great thing about this app is that we can use all of the core features of Angular2. So lets dive right into it.
