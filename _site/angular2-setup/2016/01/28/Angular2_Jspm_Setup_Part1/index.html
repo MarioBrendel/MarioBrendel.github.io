@@ -120,40 +120,40 @@ After you have executed these commands, create an app folder within you root fol
 <br/>
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">typescriptOptions</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;tsconfig&quot;</span><span class="o">:</span> <span class="kc">true</span> <span class="c1">// indicates that a tsconfig exists that should be used</span>
-  <span class="p">},</span>
-  <span class="nx">packages</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;app&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// all files within the app folder</span>
-      <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;bootstrap&quot;</span><span class="p">,</span> <span class="c1">// main file of the package (will be important later)</span>
-      <span class="s2">&quot;format&quot;</span><span class="o">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="c1">// module format</span>
-      <span class="s2">&quot;defaultExtension&quot;</span><span class="o">:</span> <span class="s2">&quot;ts&quot;</span><span class="p">,</span> <span class="c1">// default extension of all files</span>
-      <span class="s2">&quot;meta&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;*.ts&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// all ts files will be loaded with the ts loader</span>
-          <span class="s2">&quot;loader&quot;</span><span class="o">:</span> <span class="s2">&quot;ts&quot;</span>
-        <span class="p">},</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">},</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">typescriptOptions: <span class="o">{</span>
+    <span class="s2">&quot;tsconfig&quot;</span>: <span class="nb">true</span> // indicates that a tsconfig exists that should be used
+  <span class="o">}</span>,
+  packages: <span class="o">{</span>
+    <span class="s2">&quot;app&quot;</span>: <span class="o">{</span> // all files within the app folder
+      <span class="s2">&quot;main&quot;</span>: <span class="s2">&quot;bootstrap&quot;</span>, // main file of the package <span class="o">(</span>will be important later<span class="o">)</span>
+      <span class="s2">&quot;format&quot;</span>: <span class="s2">&quot;system&quot;</span>, // module format
+      <span class="s2">&quot;defaultExtension&quot;</span>: <span class="s2">&quot;ts&quot;</span>, // default extension of all files
+      <span class="s2">&quot;meta&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;*.ts&quot;</span>: <span class="o">{</span> // all ts files will be loaded with the ts loader
+          <span class="s2">&quot;loader&quot;</span>: <span class="s2">&quot;ts&quot;</span>
+        <span class="o">}</span>,
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>,</code></pre></div>
 
 <p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js">config.js</a><br/><br/>
 And finally we will create a <a href="https://github.com/Microsoft/TypeScript/wiki/tsconfig.json">tsconfig.json</a> file within our root folder. This file is used to give the typescript compiler some informations about our environment.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
- <span class="s2">&quot;compilerOptions&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;target&quot;</span><span class="o">:</span> <span class="s2">&quot;es5&quot;</span><span class="p">,</span>                <span class="cm">/* target of the compilation (es5) */</span>
-    <span class="s2">&quot;module&quot;</span><span class="o">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>             <span class="cm">/* System.register([dependencies], function) (in JS)*/</span>
-    <span class="s2">&quot;moduleResolution&quot;</span><span class="o">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>     <span class="cm">/* how module gets resolved (needed for Angular 2)*/</span>
-    <span class="s2">&quot;emitDecoratorMetadata&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="cm">/* needed for decorators */</span>
-    <span class="s2">&quot;experimentalDecorators&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="cm">/* needed for decorators (@Injectable) */</span>
-    <span class="s2">&quot;noImplicitAny&quot;</span><span class="o">:</span> <span class="kc">false</span>          <span class="cm">/* any has to be written explicity*/</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;exclude&quot;</span><span class="o">:</span> <span class="p">[</span>   <span class="cm">/* since compiling these packages could take ages, we want to ignore them*/</span>
-    <span class="s2">&quot;jspm_packages&quot;</span><span class="p">,</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">{</span>
+ <span class="s2">&quot;compilerOptions&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;target&quot;</span>: <span class="s2">&quot;es5&quot;</span>,                /* target of the compilation <span class="o">(</span>es5<span class="o">)</span> */
+    <span class="s2">&quot;module&quot;</span>: <span class="s2">&quot;system&quot;</span>,             /* System.register<span class="o">([</span>dependencies<span class="o">]</span>, <span class="k">function</span><span class="o">)</span> <span class="o">(</span>in JS<span class="o">)</span>*/
+    <span class="s2">&quot;moduleResolution&quot;</span>: <span class="s2">&quot;node&quot;</span>,     /* how module gets resolved <span class="o">(</span>needed <span class="k">for</span> Angular 2<span class="o">)</span>*/
+    <span class="s2">&quot;emitDecoratorMetadata&quot;</span>: <span class="nb">true</span>,  /* needed <span class="k">for</span> decorators */
+    <span class="s2">&quot;experimentalDecorators&quot;</span>: <span class="nb">true</span>, /* needed <span class="k">for</span> decorators <span class="o">(</span>@Injectable<span class="o">)</span> */
+    <span class="s2">&quot;noImplicitAny&quot;</span>: <span class="nb">false</span>          /* any has to be written explicity*/
+  <span class="o">}</span>,
+  <span class="s2">&quot;exclude&quot;</span>: <span class="o">[</span>   /* since compiling these packages could take ages, we want to ignore them*/
+    <span class="s2">&quot;jspm_packages&quot;</span>,
     <span class="s2">&quot;node_modules&quot;</span>
-  <span class="p">],</span>
-  <span class="s2">&quot;compileOnSave&quot;</span><span class="o">:</span> <span class="kc">false</span>        <span class="cm">/* on default the compiler will create js files */</span>
-<span class="p">}</span></code></pre></div>
+  <span class="o">]</span>,
+  <span class="s2">&quot;compileOnSave&quot;</span>: <span class="nb">false</span>        /* on default the compiler will create js files */
+<span class="o">}</span></code></pre></div>
 
 <p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json">tsconfig.json</a><br/><br/>
 <b>Note: </b>The comments in the tsconfig file might give you an error, so you better delete them.
@@ -166,14 +166,14 @@ The first command will install the typescript plugin which is used for our ts lo
 Normally this is everything you need for your project setup, but there is currently an error with the <a href="https://github.com/Microsoft/TypeScript/issues/6012">module resolution</a>.
 So we need to add the following lines to our package.json file:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;angular2&quot;</span><span class="o">:</span> <span class="s2">&quot;2.0.0-beta.1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;es6-promise&quot;</span><span class="o">:</span> <span class="s2">&quot;^3.0.2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;es6-shim&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.33.3&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;reflect-metadata&quot;</span><span class="o">:</span> <span class="s2">&quot;0.1.2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rxjs&quot;</span><span class="o">:</span> <span class="s2">&quot;5.0.0-beta.0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;zone.js&quot;</span><span class="o">:</span> <span class="s2">&quot;0.5.10&quot;</span>
-<span class="p">}</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">&quot;dependencies&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;angular2&quot;</span>: <span class="s2">&quot;2.0.0-beta.1&quot;</span>,
+    <span class="s2">&quot;es6-promise&quot;</span>: <span class="s2">&quot;^3.0.2&quot;</span>,
+    <span class="s2">&quot;es6-shim&quot;</span>: <span class="s2">&quot;^0.33.3&quot;</span>,
+    <span class="s2">&quot;reflect-metadata&quot;</span>: <span class="s2">&quot;0.1.2&quot;</span>,
+    <span class="s2">&quot;rxjs&quot;</span>: <span class="s2">&quot;5.0.0-beta.0&quot;</span>,
+    <span class="s2">&quot;zone.js&quot;</span>: <span class="s2">&quot;0.5.10&quot;</span>
+<span class="o">}</span></code></pre></div>
 
 <p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a><br/><br/>
 Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis would throw errors as soon as we import a module from the angular2 package.
@@ -200,10 +200,10 @@ Now that we&#39;ve got everything wired up we will write some code. At first we&
 
 <p>Next we will create the bootstrap.ts file in the app directory:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">bootstrap</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;angular2/platform/browser&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">AppComponent</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;./app.component&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">import <span class="o">{</span> bootstrap <span class="o">}</span> from <span class="s1">&#39;angular2/platform/browser&#39;</span><span class="p">;</span>
+import <span class="o">{</span>AppComponent<span class="o">}</span> from <span class="s2">&quot;./app.component&quot;</span><span class="p">;</span>
 
-<span class="nx">bootstrap</span><span class="p">(</span><span class="nx">AppComponent</span><span class="p">);</span></code></pre></div>
+bootstrap<span class="o">(</span>AppComponent<span class="o">)</span><span class="p">;</span></code></pre></div>
 
 <p>and the corresponding app.component.ts file</p>
 
@@ -244,7 +244,7 @@ Furthermore we will use the bundling of jspm to generate an independent js file 
         
           
             
-              <li><a href="/setup/2016/01/29/Angular2_Jspm_Setup_Part2/">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</a><br /></li>
+              <li><a href="/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2/">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</a><br /></li>
               
         
       

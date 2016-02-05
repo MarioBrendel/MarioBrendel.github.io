@@ -4,7 +4,7 @@ title: Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 
 date: 2016-01-28
 author: Mario Brendel
 comments: true
-categories: [Setup]
+categories: [angular2-setup]
 tags: [Angular2-Setup-JSPM]
 ---
 This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.
@@ -32,7 +32,7 @@ After you have executed these commands, create an app folder within you root fol
 <br/>
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:
 
-{% highlight javascript %}
+{% highlight bash %}
 typescriptOptions: {
     "tsconfig": true // indicates that a tsconfig exists that should be used
   },
@@ -53,7 +53,7 @@ typescriptOptions: {
 File: [config.js](https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js)<br/><br/>
 And finally we will create a [tsconfig.json](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json) file within our root folder. This file is used to give the typescript compiler some informations about our environment.
 
-{% highlight javascript %}
+{% highlight bash %}
 {
  "compilerOptions": {
     "target": "es5",                /* target of the compilation (es5) */
@@ -82,7 +82,7 @@ The first command will install the typescript plugin which is used for our ts lo
 Normally this is everything you need for your project setup, but there is currently an error with the [module resolution](https://github.com/Microsoft/TypeScript/issues/6012).
 So we need to add the following lines to our package.json file:
 
-{% highlight javascript %}
+{% highlight bash %}
 "dependencies": {
     "angular2": "2.0.0-beta.1",
     "es6-promise": "^3.0.2",
@@ -120,7 +120,7 @@ Now that we've got everything wired up we will write some code. At first we'll c
 
 Next we will create the bootstrap.ts file in the app directory:
 
-{% highlight javascript %}
+{% highlight bash %}
 import { bootstrap } from 'angular2/platform/browser';
 import {AppComponent} from "./app.component";
 

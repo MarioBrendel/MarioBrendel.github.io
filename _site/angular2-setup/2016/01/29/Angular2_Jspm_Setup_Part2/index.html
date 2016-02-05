@@ -105,21 +105,21 @@ You may ask yourself what SystemJS actually is. Well you&#39;ve already used it 
 <span class="nt">&lt;/script&gt;</span>
 ...</code></pre></div>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">[</span><span class="nx">config</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span>
-<span class="p">...</span>
-  <span class="s2">&quot;app&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// all files within the app folder</span>
-  <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;bootstrap&quot;</span><span class="p">,</span> <span class="c1">// main file of the package (will be important later)</span>
-  <span class="s2">&quot;format&quot;</span><span class="o">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="c1">// module format</span>
-<span class="p">...</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>config.js<span class="o">]</span>
+...
+  <span class="s2">&quot;app&quot;</span>: <span class="o">{</span> // all files within the app folder
+  <span class="s2">&quot;main&quot;</span>: <span class="s2">&quot;bootstrap&quot;</span>, // main file of the package <span class="o">(</span>will be important later<span class="o">)</span>
+  <span class="s2">&quot;format&quot;</span>: <span class="s2">&quot;system&quot;</span>, // module format
+...</code></pre></div>
 
 <p>This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line &quot;format&quot;: &quot;system&quot;. <br/><br/>
 Now lets extend our <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a> with the following lines:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;chokidar-socket-emitter&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.4.2&quot;</span><span class="p">,</span> <span class="c1">// event source for systemjs-hot-reloader</span>
-    <span class="s2">&quot;http-server&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.8.5&quot;</span><span class="p">,</span>             <span class="c1">// basic http-server</span>
-    <span class="s2">&quot;open&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.5&quot;</span>                      <span class="c1">// will automaticly open our page on the given port</span>
-<span class="p">},</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">&quot;devDependencies&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;chokidar-socket-emitter&quot;</span>: <span class="s2">&quot;^0.4.2&quot;</span>, // event <span class="nb">source </span><span class="k">for</span> systemjs-hot-reloader
+    <span class="s2">&quot;http-server&quot;</span>: <span class="s2">&quot;^0.8.5&quot;</span>,             // basic http-server
+    <span class="s2">&quot;open&quot;</span>: <span class="s2">&quot;0.0.5&quot;</span>                      // will automaticly open our page on the given port
+<span class="o">}</span>,</code></pre></div>
 
 <p>And run <pre><code>npm install --dev</pre></code>
 After you have executed these commands run the following line
@@ -156,9 +156,9 @@ the entire app. For more information see <a href="https://github.com/capaj/syste
 
 <p>To actually use the server.js file we&#39;ll implement the following lines in our package.json:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;node server&quot;</span>
-  <span class="p">},</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">&quot;scripts&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;start&quot;</span>: <span class="s2">&quot;node server&quot;</span>
+  <span class="o">}</span>,</code></pre></div>
 
 <p>Last but not least we will update our index.html:</p>
 
@@ -237,7 +237,7 @@ To test this we will change or index.html to:</p>
         
           
             
-              <li><a href="/setup/2016/01/28/Angular2_Jspm_Setup_Part1/">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</a><br /></li>
+              <li><a href="/angular2-setup/2016/01/28/Angular2_Jspm_Setup_Part1/">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 1)</a><br /></li>
               
         
       

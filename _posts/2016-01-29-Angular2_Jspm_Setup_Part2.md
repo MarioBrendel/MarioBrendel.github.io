@@ -4,7 +4,7 @@ title: Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 
 date: 2016-01-29
 author: Mario Brendel
 comments: true
-categories: [Setup]
+categories: [angular2-setup]
 tags: [Angular2-Setup-JSPM]
 ---
 In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
@@ -21,7 +21,7 @@ You may ask yourself what SystemJS actually is. Well you've already used it in y
 ...
 {% endhighlight %}
 
-{% highlight javascript %}
+{% highlight bash %}
 [config.js]
 ...
   "app": { // all files within the app folder
@@ -33,7 +33,7 @@ You may ask yourself what SystemJS actually is. Well you've already used it in y
 This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line "format": "system". <br/><br/>
 Now lets extend our [package.json](https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json) with the following lines:
 
-{% highlight javascript %}
+{% highlight bash %}
 "devDependencies": {
     "chokidar-socket-emitter": "^0.4.2", // event source for systemjs-hot-reloader
     "http-server": "^0.8.5",             // basic http-server
@@ -76,7 +76,7 @@ open('http://localhost:9089')
 {% endhighlight %}
 To actually use the server.js file we'll implement the following lines in our package.json:
 
-{% highlight javascript %}
+{% highlight bash %}
 "scripts": {
     "start": "node server"
   },
