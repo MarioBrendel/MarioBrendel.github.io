@@ -12,6 +12,7 @@ tagline:          'Blog About Angular2'
 description:      'Blog About Angular2'
 url:              http://mario-brendel.com
 baseurl:          /
+email:            mariob@mario-brendel.com
 
 author:
   name:           Mario Brendel
