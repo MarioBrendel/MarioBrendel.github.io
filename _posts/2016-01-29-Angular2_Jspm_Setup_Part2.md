@@ -41,9 +41,14 @@ Now lets extend our [package.json](https://github.com/MarioBrendel/Angular2-Jspm
 },
 {% endhighlight %}
 
-And run <pre><code>npm install --dev</pre></code>
+And run
+{% highlight bash %}
+npm install --dev
+{% endhighlight %}
 After you have executed these commands run the following line
-<pre><code>jspm install systemjs-hot-reloader</pre></code>
+{% highlight bash%}
+jspm install systemjs-hot-reloader
+{% endhighlight %}
 This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
 the entire app. For more information see [SystemJS-Hot-Reloader](https://github.com/capaj/systemjs-hot-reloader). <br/> <br/>
 
@@ -115,14 +120,18 @@ As soon as you run your app on localhost, the SystemJS-Hot-Reloader will be used
 the app in production the reloader won't be used.<br/>
 <h2>Running The Application</h2>
 Finally we will run our app with
-<pre><code>npm start</pre></code>
+{% highlight bash %}
+npm start
+{% endhighlight %}
 And if everything went right, you should be able to hot reload your application.
 ![hot-reloading example]({{ site.url }}/public/gifs/hot-reloading.gif)
 <b>Note </b>that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
 <h2>Bundling Our Application</h2>
 This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
 with jspm.
- <pre><code>jspm bundle-sfx app build/app.js</pre></code>
+{% highlight bash %}
+jspm bundle-sfx app build/app.js
+{% endhighlight %}
 ... that's it. Seriously you only have to run this command and you'll get a script file which is completely independent of jspm/systemjs.
 To test this we will change or index.html to:
 

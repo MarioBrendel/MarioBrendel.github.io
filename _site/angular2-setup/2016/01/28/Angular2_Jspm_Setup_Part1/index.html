@@ -96,28 +96,24 @@
   <p>This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.</p>
 
 <h2>Prerequisites</h2>
-
 <ul>
-<li><a href="https://www.npmjs.com/package/npm">NPM version >= 2</a></li>
-<li><a href="https://nodejs.org/en/download/">NodeJS version >= 4</a></li>
+<li><a href="https://www.npmjs.com/package/npm">NPM version &gt;= 2</a></li>
+<li><a href="https://nodejs.org/en/download/">NodeJS version &gt;= 4</a></li>
 </ul>
-
 <h2>Setting Up Atom</h2>
-
-<p>If you haven&#39;t already downloaded atom, please navigate to: <a href="https://atom.io">atom.io</a>.
-Next you have to install some packages within your editor. Hit &#39;ctrl + ,&#39; to manover to your settings. Then select install and download: <a href="https://atom.io/packages/atom-typescript">Atom-Typescript</a>. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.</p>
+<p>If you haven’t already downloaded atom, please navigate to: <a href="https://atom.io">atom.io</a>.
+Next you have to install some packages within your editor. Hit ‘ctrl + ,’ to manover to your settings. Then select install and download: <a href="https://atom.io/packages/atom-typescript">Atom-Typescript</a>. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.</p>
 
 <h2>Setting up the Project</h2>
-
 <p>At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install jspm -g
 jspm init -y</code></pre></div>
 
 <p>The npm install is used to get jspm which will install our frontend package manager. For more information see: <a href="http://jspm.io/">JSPM</a>
-<br />JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.</pre><br /><br />
-After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: <img src="http://localhost:4000/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG" alt="folder structure">
-<br/>
+<br />JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.
+After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: <img src="http://localhost:4000/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG" alt="folder structure" />
+<br />
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">typescriptOptions: <span class="o">{</span>
@@ -136,7 +132,7 @@ Now we will change the config.js a little bit to make it compatible with our fol
     <span class="o">}</span>
   <span class="o">}</span>,</code></pre></div>
 
-<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js">config.js</a><br/><br/>
+<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js">config.js</a><br /><br />
 And finally we will create a <a href="https://github.com/Microsoft/TypeScript/wiki/tsconfig.json">tsconfig.json</a> file within our root folder. This file is used to give the typescript compiler some informations about our environment.</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">{</span>
@@ -155,14 +151,17 @@ And finally we will create a <a href="https://github.com/Microsoft/TypeScript/wi
   <span class="s2">&quot;compileOnSave&quot;</span>: <span class="nb">false</span>        /* on default the compiler will create js files */
 <span class="o">}</span></code></pre></div>
 
-<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json">tsconfig.json</a><br/><br/>
+<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json">tsconfig.json</a><br /><br />
 <b>Note: </b>The comments in the tsconfig file might give you an error, so you better delete them.
-<br/><br/>To get all the packages we need for development, we will use jspm install.
+<br /><br />To get all the packages we need for development, we will use jspm install.
 To find out what packages are currently available with the jspm installer
-you can use the <a href="http://kasperlewau.github.io/registry/#/">jspm-registry</a>. So now lets run some more code in our terminal:
-<pre><code>jspm install ts <br/>jspm install angular2</pre></code>
-The first command will install the typescript plugin which is used for our ts loader, that you can see above.
-<br/><br/>
+you can use the <a href="http://kasperlewau.github.io/registry/#/">jspm-registry</a>. So now lets run some more code in our terminal:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">jspm install ts
+jspm install angular2</code></pre></div>
+
+<p>The first command will install the typescript plugin which is used for our ts loader, that you can see above.
+<br /><br />
 Normally this is everything you need for your project setup, but there is currently an error with the <a href="https://github.com/Microsoft/TypeScript/issues/6012">module resolution</a>.
 So we need to add the following lines to our package.json file:</p>
 
@@ -175,11 +174,11 @@ So we need to add the following lines to our package.json file:</p>
     <span class="s2">&quot;zone.js&quot;</span>: <span class="s2">&quot;0.5.10&quot;</span>
 <span class="o">}</span></code></pre></div>
 
-<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a><br/><br/>
+<p>File: <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a><br /><br />
 Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis would throw errors as soon as we import a module from the angular2 package.
-<br/><b>Note: </b>Our code would also run without the angular2 files from the npm install, <b>BUT</b> the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so I would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
+<br /><b>Note: </b>Our code would also run without the angular2 files from the npm install, <b>BUT</b> the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so I would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.</p>
 <h2>Writing Some Code</h2>
-Now that we&#39;ve got everything wired up we will write some code. At first we&#39;ll create a index.html file at our root folder with the following code:</p>
+<p>Now that we’ve got everything wired up we will write some code. At first we’ll create a index.html file at our root folder with the following code:</p>
 
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
@@ -219,13 +218,16 @@ bootstrap<span class="o">(</span>AppComponent<span class="o">)</span><span class
 <span class="o">}</span></code></pre></div>
 
 <p>Finally our folder structure should look something like this:
-<img src="http://localhost:4000/public/images/2016-01-28-Setup/Setup_final(part%201).PNG" alt="final setup">
+<img src="http://localhost:4000/public/images/2016-01-28-Setup/Setup_final(part 1).PNG" alt="final setup" /></p>
 <h2>Running The Application</h2>
-To run our Application we execute the following commands:
-<pre><code>npm install live-server -g <br/>live-server</pre></code>
-This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
-<br/></br>In the next part of this tutorial we will use SystemJS Hot reloader, so that we
-don&#39;t have to wait 5 seconds until every change to our app is published.
+<p>To run our Application we execute the following commands:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install live-server -g
+live-server</code></pre></div>
+
+<p>This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
+<br />&lt;/br&gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we
+don’t have to wait 5 seconds until every change to our app is published.
 Furthermore we will use the bundling of jspm to generate an independent js file of our application.</p>
 
 </div>
@@ -234,6 +236,12 @@ Furthermore we will use the bundling of jspm to generate an independent js file 
   <h2>Related Posts</h2>
   <ul class="related-posts">
     <ul>
+      
+        
+          
+            
+          
+        
       
         
           

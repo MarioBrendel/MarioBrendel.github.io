@@ -94,9 +94,9 @@
   <h1 class="post-title">Angular 2 Starter Setup with JSPM, SystemJS and Typescript in atom (Part 2)</h1>
   <span class="post-date">29 Jan 2016</span>
   <p>In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
-Whenever you have problems with this tutorial, you can look up the code at <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed">Github</a> or contact me :).
+Whenever you have problems with this tutorial, you can look up the code at <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed">Github</a> or contact me :).</p>
 <h2>Implementing SystemJS-Hot-Reloader</h2>
-You may ask yourself what SystemJS actually is. Well you&#39;ve already used it in your index.html file together with the config.js:</p>
+<p>You may ask yourself what SystemJS actually is. Well you’ve already used it in your index.html file together with the config.js:</p>
 
 <div class="highlight"><pre><code class="language-html" data-lang="html">[index.html]
 ...
@@ -112,7 +112,7 @@ You may ask yourself what SystemJS actually is. Well you&#39;ve already used it 
   <span class="s2">&quot;format&quot;</span>: <span class="s2">&quot;system&quot;</span>, // module format
 ...</code></pre></div>
 
-<p>This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line &quot;format&quot;: &quot;system&quot;. <br/><br/>
+<p>This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line “format”: “system”. <br /><br />
 Now lets extend our <a href="https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json">package.json</a> with the following lines:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">&quot;devDependencies&quot;</span>: <span class="o">{</span>
@@ -121,11 +121,16 @@ Now lets extend our <a href="https://github.com/MarioBrendel/Angular2-Jspm-Types
     <span class="s2">&quot;open&quot;</span>: <span class="s2">&quot;0.0.5&quot;</span>                      // will automaticly open our page on the given port
 <span class="o">}</span>,</code></pre></div>
 
-<p>And run <pre><code>npm install --dev</pre></code>
-After you have executed these commands run the following line
-<pre><code>jspm install systemjs-hot-reloader</pre></code>
-This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
-the entire app. For more information see <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>. <br/> <br/></p>
+<p>And run</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install --dev</code></pre></div>
+
+<p>After you have executed these commands run the following line</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">jspm install systemjs-hot-reloader</code></pre></div>
+
+<p>This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
+the entire app. For more information see <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>. <br /> <br /></p>
 
 <p>Now lets create a server.js file within our root folder that will combine our http-server with the chokidar-socket-emitter:</p>
 
@@ -154,7 +159,7 @@ the entire app. For more information see <a href="https://github.com/capaj/syste
 <span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9089</span><span class="p">)</span>
 <span class="nx">open</span><span class="p">(</span><span class="s1">&#39;http://localhost:9089&#39;</span><span class="p">)</span></code></pre></div>
 
-<p>To actually use the server.js file we&#39;ll implement the following lines in our package.json:</p>
+<p>To actually use the server.js file we’ll implement the following lines in our package.json:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">&quot;scripts&quot;</span>: <span class="o">{</span>
     <span class="s2">&quot;start&quot;</span>: <span class="s2">&quot;node server&quot;</span>
@@ -188,18 +193,22 @@ the entire app. For more information see <a href="https://github.com/capaj/syste
 <span class="nt">&lt;/html&gt;</span></code></pre></div>
 
 <p>As soon as you run your app on localhost, the SystemJS-Hot-Reloader will be used. If you are running
-the app in production the reloader won&#39;t be used.<br/>
+the app in production the reloader won’t be used.<br /></p>
 <h2>Running The Application</h2>
-Finally we will run our app with
-<pre><code>npm start</pre></code>
-And if everything went right, you should be able to hot reload your application.
-<img src="http://localhost:4000/public/gifs/hot-reloading.gif" alt="hot-reloading example">
-<b>Note </b>that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
+<p>Finally we will run our app with</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm start</code></pre></div>
+
+<p>And if everything went right, you should be able to hot reload your application.
+<img src="http://localhost:4000/public/gifs/hot-reloading.gif" alt="hot-reloading example" />
+<b>Note </b>that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.</p>
 <h2>Bundling Our Application</h2>
-This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
-with jspm.
- <pre><code>jspm bundle-sfx app build/app.js</pre></code>
-... that&#39;s it. Seriously you only have to run this command and you&#39;ll get a script file which is completely independent of jspm/systemjs.
+<p>This was always the most annoying part for me. Bundling with gulp/webpack/… feels tiresome. Lets see how much scripts we have to write to bundle
+with jspm.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">jspm bundle-sfx app build/app.js</code></pre></div>
+
+<p>… that’s it. Seriously you only have to run this command and you’ll get a script file which is completely independent of jspm/systemjs.
 To test this we will change or index.html to:</p>
 
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
@@ -217,7 +226,7 @@ To test this we will change or index.html to:</p>
 <span class="nt">&lt;/html&gt;</span></code></pre></div>
 
 <p>And you are good to go. If you want to now more about bundling, check out the <a href="https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md">production workflow repo of jspm</a>.
-<br/><br/>To get more information&#39;s about the package that we used, please go to: <a href="http://jspm.io/">Jspm</a>, <a href="https://github.com/systemjs/systemjs">SystemJS</a> or <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>.</p>
+<br /><br />To get more information’s about the package that we used, please go to: <a href="http://jspm.io/">Jspm</a>, <a href="https://github.com/systemjs/systemjs">SystemJS</a> or <a href="https://github.com/capaj/systemjs-hot-reloader">SystemJS-Hot-Reloader</a>.</p>
 
 </div>
 
@@ -225,6 +234,12 @@ To test this we will change or index.html to:</p>
   <h2>Related Posts</h2>
   <ul class="related-posts">
     <ul>
+      
+        
+          
+            
+          
+        
       
         
           

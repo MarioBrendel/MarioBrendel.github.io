@@ -4,7 +4,7 @@
  <title>Mario Brendel</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2016-02-05T14:21:15+01:00</updated>
+ <updated>2016-02-11T13:16:32+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mario Brendel</name>
@@ -13,26 +13,37 @@
 
  
  <entry>
+   <title>Quick Update</title>
+   <link href="http://localhost:4000/2016/02/11/Quick_Update/"/>
+   <updated>2016-02-11T00:00:00+01:00</updated>
+   <id>http://localhost:4000/2016/02/11/Quick_Update</id>
+   <content type="html">&lt;p&gt;Hey guys, this is just a quick update to inform you that all the future parts of the “Lets create a social media app” will be in video form and hosted on
+youtube. I think its way easier to explain stuff via video. Nevertheless I’ll still post general tutorials about angular 2 like testing and such stuff in text form.
+All my videos will also appear on this blog so that you don’t miss anything. &lt;br /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Lets create a social media app (Part 1 - The Forms)</title>
    <link href="http://localhost:4000/forms/2016/02/05/The_Form/"/>
    <updated>2016-02-05T00:00:00+01:00</updated>
    <id>http://localhost:4000/forms/2016/02/05/The_Form</id>
-   <content type="html">&lt;p&gt;In this tutorial series we&amp;#39;ll try to build a social media app with Angular 2.
+   <content type="html">&lt;p&gt;In this tutorial series we’ll try to build a social media app with Angular 2.
 This application will be like a stripped down Facebook. So there will be a register-/login form, profiles and so on.
 The great thing about this app is that we can use all of the core features of Angular2. So lets dive right into it.
 If you want to have the same styles as I have, you need to use: &lt;a href=&quot;https://bootswatch.com/paper/bootstrap.min.css&quot;&gt;bootstrap-paper-css&lt;/a&gt;.
-&lt;br/&gt; &lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Since there are already a lot of really good basic tutorials I may not explain everything.
-If you have trouble to follow, feel free to checkout the &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 form&lt;/a&gt; and &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/template-syntax.html&quot;&gt;Angular2 template syntax&lt;/a&gt; guide.
+&lt;br /&gt; &lt;br /&gt;&lt;b&gt;Note: &lt;/b&gt;Since there are already a lot of really good basic tutorials I may not explain everything.
+If you have trouble to follow, feel free to checkout the &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 form&lt;/a&gt; and &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/template-syntax.html&quot;&gt;Angular2 template syntax&lt;/a&gt; guide.&lt;/p&gt;
 &lt;h2&gt;Goal Of This Part&lt;/h2&gt;
-In this part we want to build a form that will look like this:
-&lt;img src=&quot;http://localhost:4000/public/gifs/form_in_action.gif&quot; alt=&quot;example form&quot;&gt;
-At first we&amp;#39;ll program a little example with &lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/Control-class.html&quot;&gt;Control&lt;/a&gt;,
+&lt;p&gt;In this part we want to build a form that will look like this:
+&lt;img src=&quot;http://localhost:4000/public/gifs/form_in_action.gif&quot; alt=&quot;example form&quot; /&gt;
+At first we’ll program a little example with &lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/Control-class.html&quot;&gt;Control&lt;/a&gt;,
 &lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/ControlGroup-class.html&quot;&gt;Controlgroups&lt;/a&gt; and
 &lt;a href=&quot;https://angular.io/docs/ts/latest/api/common/Validators-class.html&quot;&gt;Validators&lt;/a&gt; to see how they work.
-After that we&amp;#39;ll write our own custom controls and validators which will be more efficient for our use case.
+After that we’ll write our own custom controls and validators which will be more efficient for our use case.&lt;/p&gt;
 &lt;h2&gt;The First Field&lt;/h2&gt;
-Before we get to the coding part make sure you have a folder structure like this:
-&lt;img src=&quot;http://localhost:4000/public/images/Social-Media-App(Part%201%20-%20The%20Forms)/starting_folder_structure.PNG&quot; alt=&quot;folder-structure&quot;&gt;
+&lt;p&gt;Before we get to the coding part make sure you have a folder structure like this:
+&lt;img src=&quot;http://localhost:4000/public/images/Social-Media-App(Part 1 - The Forms)/starting_folder_structure.PNG&quot; alt=&quot;folder-structure&quot; /&gt;
 The app.component.ts file is pretty straight forward:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; RegisterComponent &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s2&quot;&gt;&amp;quot;./form/register.component&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -48,8 +59,8 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Component &lt;span class=&
   constructor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;If you don&amp;#39;t know what the bootstrap.ts is, read my &lt;a href=&quot;http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1&quot;&gt;Angular2 setup tutorial&lt;/a&gt;.
-&lt;br/&gt;Don&amp;#39;t be scared if you get an error at the moment. Its because we haven&amp;#39;t created the Registercomponent. &lt;br\&gt; &lt;br\&gt;&lt;/p&gt;
+&lt;p&gt;If you don’t know what the bootstrap.ts is, read my &lt;a href=&quot;http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1&quot;&gt;Angular2 setup tutorial&lt;/a&gt;.
+&lt;br /&gt;Don’t be scared if you get an error at the moment. Its because we haven’t created the Registercomponent. &amp;lt;br&amp;gt; &amp;lt;br&amp;gt;&lt;/p&gt;
 
 &lt;p&gt;As you may have experienced, forms can get really big and intimidating. So lets take a look at a basic register form
 with only 1 field that behaves similarly to the example above:&lt;/p&gt;
@@ -102,11 +113,11 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormBuilder, Validators, C
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;b&gt;Note: &lt;/b&gt; This example only shows 1 field. &lt;br/&gt;
-HOLY COW that&amp;#39;s a lot of code/template for just 1 field. I&amp;#39;ll promise you that at the end of this tutorial this will look way better,
-but for now we leave it as it is and talk a little bit about controls.
+&lt;p&gt;&lt;b&gt;Note: &lt;/b&gt; This example only shows 1 field. &lt;br /&gt;
+HOLY COW that’s a lot of code/template for just 1 field. I’ll promise you that at the end of this tutorial this will look way better,
+but for now we leave it as it is and talk a little bit about controls.&lt;/p&gt;
 &lt;h2&gt;How Controls Work&lt;/h2&gt;
-Controls are pretty straight forward in Angular2. You could create a Controlgroup like this:&lt;/p&gt;
+&lt;p&gt;Controls are pretty straight forward in Angular2. You could create a Controlgroup like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;this.username &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 this.email &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new Control&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;, Validator.required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -120,13 +131,13 @@ this.formControl &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new ControlGroup
   telephone: this.telephone
 &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;So what&amp;#39;s happening here? At first we&amp;#39;ve created our Control objects with an empty string and a validator.
+&lt;p&gt;So what’s happening here? At first we’ve created our Control objects with an empty string and a validator.
 The empty string is the initial value of that control.
 The second parameter tells us that the field on which the control is applied is required.
 For example if you apply the username control on a username input field it would be invalid as long as no username has been entered.
-But we don&amp;#39;t want to watch only a single input field, instead we are interested in the whole form.
+But we don’t want to watch only a single input field, instead we are interested in the whole form.
 To achieve that we just wrap the form control around all controls that are important.
-&lt;br/&gt;Since this is a lot of code we can shorten this a little bit by injecting the formbuilder and use him like this:&lt;/p&gt;
+&lt;br /&gt;Since this is a lot of code we can shorten this a little bit by injecting the formbuilder and use him like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;constructor&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;private _fb: FormBuilder&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
   this.registerForm &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; this._fb.group&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;
@@ -138,9 +149,9 @@ To achieve that we just wrap the form control around all controls that are impor
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This is the equivalent to the code given above.
-&lt;br/&gt; You want to know a little bit more about this topic? Then go to: &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 - Forms&lt;/a&gt;
+&lt;br /&gt; You want to know a little bit more about this topic? Then go to: &lt;a href=&quot;https://angular.io/docs/ts/latest/guide/forms.html&quot;&gt;Angular2 - Forms&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Build Form Field Components&lt;/h2&gt;
-To shorten our register component we want to encapsulate this code:&lt;/p&gt;
+&lt;p&gt;To shorten our register component we want to encapsulate this code:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!regForm.form.find(&amp;#39;username&amp;#39;).valid&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt;                                                  &amp;amp;&amp;amp; regForm.form.find(&amp;#39;username&amp;#39;).dirty&amp;quot;&lt;/span&gt;&amp;gt;
@@ -160,7 +171,7 @@ To shorten our register component we want to encapsulate this code:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;formField &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Username&amp;quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;control&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/formField&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;That looks nice, does it? Well let&amp;#39;s see how we can achieve that.
+&lt;p&gt;That looks nice, does it? Well let’s see how we can achieve that.
 At first we create a new typescript file under the folder form/field and we call that file Formfield.ts (not the best name but ok for this tutorial).
 The file will look like this:&lt;/p&gt;
 
@@ -195,35 +206,35 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Control &lt;span class=&qu
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Let&amp;#39;s take a little deeper look what each part actually does.&lt;/p&gt;
+&lt;p&gt;Let’s take a little deeper look what each part actually does.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-group&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;class.has-error&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;!control.valid &amp;amp;&amp;amp; control.dirty&amp;quot;&lt;/span&gt;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This part will color our input field red as soon as the given control is not valid and the value of the input has changed.
-&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;label &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;attr.for&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&amp;gt;&lt;span class=&quot;o&quot;&gt;{{&lt;/span&gt;name&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;&amp;lt;/label&amp;gt;
     &amp;lt;input &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;{{type}}&amp;quot;&lt;/span&gt;  &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;nv&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;{{name}}&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ngFormControl&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control&amp;quot;&lt;/span&gt;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Here we&amp;#39;re applying the type(text/email...), which came as an input variable, and the control.
+&lt;p&gt;Here we’re applying the type(text/email…), which came as an input variable, and the control.
 The control is used to validate the field. More on this in the next chapter.
-&lt;br/&gt;&lt;br/&gt; Last but not least we got this snippet:&lt;/p&gt;
+&lt;br /&gt;&lt;br /&gt; Last but not least we got this snippet:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;div &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hidden&lt;span class=&quot;o&quot;&gt;]=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;control.untouched || control.valid&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;alert alert-danger&amp;quot;&lt;/span&gt;&amp;gt;
   This field is required.
 &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This will show the red bar right under the input as soon as the user has touched the input field and it is invalid.
-Wow that was actually pretty easy. Now we can reuse this form field everywhere we want... &lt;b&gt;BUT&lt;/b&gt; wait.
+Wow that was actually pretty easy. Now we can reuse this form field everywhere we want… &lt;b&gt;BUT&lt;/b&gt; wait.
 The error message will always be the same no matter what the actual error actually was. We have to change that.
-Technically we could provide the error message via an input variable to this component, but this wouldn&amp;#39;t be
+Technically we could provide the error message via an input variable to this component, but this wouldn’t be
 a good approach, since we have to declare the same error message every time we want to use the same formfield.
 Furthermore the best approach would be to define our error message within the validator, because he is responsible
-for the given error. So lets see how we can do this.
+for the given error. So lets see how we can do this.&lt;/p&gt;
 &lt;h2&gt;Build Custom Validations and Controls&lt;/h2&gt;
-As we&amp;#39;ve seen before, our error message is fix. To get around that we&amp;#39;ll first build a custom validator.
+&lt;p&gt;As we’ve seen before, our error message is fix. To get around that we’ll first build a custom validator.
 This validator will check if our username starts with a letter and has at least 3 characters.
 We place our formfieldvalidator.service.ts file right under the validation folder.&lt;/p&gt;
 
@@ -251,8 +262,8 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; Injectable &lt;span class=
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Ok now I&amp;#39;m pretty sure you have a couple of questions. Why do we need that interface?
-Firstly we are a little bit more expressive with our expected return. But this doesn&amp;#39;t explain
+&lt;p&gt;Ok now I’m pretty sure you have a couple of questions. Why do we need that interface?
+Firstly we are a little bit more expressive with our expected return. But this doesn’t explain
 why we are returning an object anyway. Why not a string? Well for that we have to look in the AbstractControl
 class (the Control class inherits from AbstractControl):&lt;/p&gt;
 
@@ -285,7 +296,7 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; ValidationResult &lt;span 
 &lt;p&gt;Ok, cool. Now our errors will contain of ValidationResults(which are currently only strings). These Results
 have a message that we access via our getter. Wow that was a lot of stuff and not that easy to understand.
 If you want you can check my &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Social-Media-App&quot;&gt;Github repo&lt;/a&gt; and take your 10minutes to grasp everything.
-I&amp;#39;m not sure either if that is best practice but I&amp;#39;m actually pretty satisfied with the result.
+I’m not sure either if that is best practice but I’m actually pretty satisfied with the result.
 If we put everything together our final register form looks like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormControl &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; from &lt;span class=&quot;s2&quot;&gt;&amp;quot;./contol/FormControl&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -348,10 +359,10 @@ import &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; FormFieldValidationService
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;@Input&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; control: FormControl&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Wow this looks way better than our first register component :). &lt;br/&gt;
-&lt;b&gt;Note: &lt;/b&gt;We can&amp;#39;t use the formbuilder anymore. I&amp;#39;m not entirely sure why it&amp;#39;s not working,
-but this code isn&amp;#39;t more complex than the code with the formbuilder. &lt;br/&gt; &lt;br/&gt;
-Since I haven&amp;#39;t shown all validators you may want to visit my &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Social-Media-App&quot;&gt;Github page&lt;/a&gt;
+&lt;p&gt;Wow this looks way better than our first register component :). &lt;br /&gt;
+&lt;b&gt;Note: &lt;/b&gt;We can’t use the formbuilder anymore. I’m not entirely sure why it’s not working,
+but this code isn’t more complex than the code with the formbuilder. &lt;br /&gt; &lt;br /&gt;
+Since I haven’t shown all validators you may want to visit my &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Social-Media-App&quot;&gt;Github page&lt;/a&gt;
 I hope you liked this tutorial. If you have any questions feel free to ask me.&lt;/p&gt;
 </content>
  </entry>
@@ -362,9 +373,9 @@ I hope you liked this tutorial. If you have any questions feel free to ask me.&l
    <updated>2016-01-29T00:00:00+01:00</updated>
    <id>http://localhost:4000/angular2-setup/2016/01/29/Angular2_Jspm_Setup_Part2</id>
    <content type="html">&lt;p&gt;In this part we will talk more about the SystemJS-Hot-Reloader and how you can implement this awesome plugin.
-Whenever you have problems with this tutorial, you can look up the code at &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed&quot;&gt;Github&lt;/a&gt; or contact me :).
+Whenever you have problems with this tutorial, you can look up the code at &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed&quot;&gt;Github&lt;/a&gt; or contact me :).&lt;/p&gt;
 &lt;h2&gt;Implementing SystemJS-Hot-Reloader&lt;/h2&gt;
-You may ask yourself what SystemJS actually is. Well you&amp;#39;ve already used it in your index.html file together with the config.js:&lt;/p&gt;
+&lt;p&gt;You may ask yourself what SystemJS actually is. Well you’ve already used it in your index.html file together with the config.js:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;[index.html]
 ...
@@ -380,7 +391,7 @@ You may ask yourself what SystemJS actually is. Well you&amp;#39;ve already used
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;format&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;system&amp;quot;&lt;/span&gt;, // module format
 ...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line &amp;quot;format&amp;quot;: &amp;quot;system&amp;quot;. &lt;br/&gt;&lt;br/&gt;
+&lt;p&gt;This nifty tool allows us to load any module format. Currently we are using ES6 module format as you can see in the line “format”: “system”. &lt;br /&gt;&lt;br /&gt;
 Now lets extend our &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt; with the following lines:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;devDependencies&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -389,11 +400,16 @@ Now lets extend our &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Js
     &lt;span class=&quot;s2&quot;&gt;&amp;quot;open&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.5&amp;quot;&lt;/span&gt;                      // will automaticly open our page on the given port
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;And run &lt;pre&gt;&lt;code&gt;npm install --dev&lt;/pre&gt;&lt;/code&gt;
-After you have executed these commands run the following line
-&lt;pre&gt;&lt;code&gt;jspm install systemjs-hot-reloader&lt;/pre&gt;&lt;/code&gt;
-This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
-the entire app. For more information see &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;. &lt;br/&gt; &lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;And run&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install --dev&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After you have executed these commands run the following line&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jspm install systemjs-hot-reloader&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is the one magic package that makes developing of Angular 2 applications such a breeze. It only reloads the components that got changed instead of
+the entire app. For more information see &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;. &lt;br /&gt; &lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now lets create a server.js file within our root folder that will combine our http-server with the chokidar-socket-emitter:&lt;/p&gt;
 
@@ -422,7 +438,7 @@ the entire app. For more information see &lt;a href=&quot;https://github.com/cap
 &lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9089&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://localhost:9089&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;To actually use the server.js file we&amp;#39;ll implement the following lines in our package.json:&lt;/p&gt;
+&lt;p&gt;To actually use the server.js file we’ll implement the following lines in our package.json:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;s2&quot;&gt;&amp;quot;start&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;node server&amp;quot;&lt;/span&gt;
@@ -456,18 +472,22 @@ the entire app. For more information see &lt;a href=&quot;https://github.com/cap
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As soon as you run your app on localhost, the SystemJS-Hot-Reloader will be used. If you are running
-the app in production the reloader won&amp;#39;t be used.&lt;br/&gt;
+the app in production the reloader won’t be used.&lt;br /&gt;&lt;/p&gt;
 &lt;h2&gt;Running The Application&lt;/h2&gt;
-Finally we will run our app with
-&lt;pre&gt;&lt;code&gt;npm start&lt;/pre&gt;&lt;/code&gt;
-And if everything went right, you should be able to hot reload your application.
-&lt;img src=&quot;http://localhost:4000/public/gifs/hot-reloading.gif&quot; alt=&quot;hot-reloading example&quot;&gt;
-&lt;b&gt;Note &lt;/b&gt;that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.
+&lt;p&gt;Finally we will run our app with&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm start&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And if everything went right, you should be able to hot reload your application.
+&lt;img src=&quot;http://localhost:4000/public/gifs/hot-reloading.gif&quot; alt=&quot;hot-reloading example&quot; /&gt;
+&lt;b&gt;Note &lt;/b&gt;that you might have cached the old version of the site. You may want to disable your cache and hit f5 to see the results.&lt;/p&gt;
 &lt;h2&gt;Bundling Our Application&lt;/h2&gt;
-This was always the most annoying part for me. Bundling with gulp/webpack/... feels tiresome. Lets see how much scripts we have to write to bundle
-with jspm.
- &lt;pre&gt;&lt;code&gt;jspm bundle-sfx app build/app.js&lt;/pre&gt;&lt;/code&gt;
-... that&amp;#39;s it. Seriously you only have to run this command and you&amp;#39;ll get a script file which is completely independent of jspm/systemjs.
+&lt;p&gt;This was always the most annoying part for me. Bundling with gulp/webpack/… feels tiresome. Lets see how much scripts we have to write to bundle
+with jspm.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jspm bundle-sfx app build/app.js&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… that’s it. Seriously you only have to run this command and you’ll get a script file which is completely independent of jspm/systemjs.
 To test this we will change or index.html to:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
@@ -485,7 +505,7 @@ To test this we will change or index.html to:&lt;/p&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And you are good to go. If you want to now more about bundling, check out the &lt;a href=&quot;https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md&quot;&gt;production workflow repo of jspm&lt;/a&gt;.
-&lt;br/&gt;&lt;br/&gt;To get more information&amp;#39;s about the package that we used, please go to: &lt;a href=&quot;http://jspm.io/&quot;&gt;Jspm&lt;/a&gt;, &lt;a href=&quot;https://github.com/systemjs/systemjs&quot;&gt;SystemJS&lt;/a&gt; or &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;.&lt;/p&gt;
+&lt;br /&gt;&lt;br /&gt;To get more information’s about the package that we used, please go to: &lt;a href=&quot;http://jspm.io/&quot;&gt;Jspm&lt;/a&gt;, &lt;a href=&quot;https://github.com/systemjs/systemjs&quot;&gt;SystemJS&lt;/a&gt; or &lt;a href=&quot;https://github.com/capaj/systemjs-hot-reloader&quot;&gt;SystemJS-Hot-Reloader&lt;/a&gt;.&lt;/p&gt;
 </content>
  </entry>
  
@@ -497,28 +517,24 @@ To test this we will change or index.html to:&lt;/p&gt;
    <content type="html">&lt;p&gt;This blog post will be about the setup of Angular 2 with jspm and systemjs. In this post we will use the angular2 version 2.0.0-beta.1. This version might not work correctly for the IE. If you want to develop for the internet explorer you may want to use beta.0.&lt;/p&gt;
 
 &lt;h2&gt;Prerequisites&lt;/h2&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version &gt;= 2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;NodeJS version &gt;= 4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.npmjs.com/package/npm&quot;&gt;NPM version &amp;gt;= 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;NodeJS version &amp;gt;= 4&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h2&gt;Setting Up Atom&lt;/h2&gt;
-
-&lt;p&gt;If you haven&amp;#39;t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;.
-Next you have to install some packages within your editor. Hit &amp;#39;ctrl + ,&amp;#39; to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.&lt;/p&gt;
+&lt;p&gt;If you haven’t already downloaded atom, please navigate to: &lt;a href=&quot;https://atom.io&quot;&gt;atom.io&lt;/a&gt;.
+Next you have to install some packages within your editor. Hit ‘ctrl + ,’ to manover to your settings. Then select install and download: &lt;a href=&quot;https://atom.io/packages/atom-typescript&quot;&gt;Atom-Typescript&lt;/a&gt;. As you can see there are a lot features that comes with the package. My personal favorite is the autocompletion and live error analysis.&lt;/p&gt;
 
 &lt;h2&gt;Setting up the Project&lt;/h2&gt;
-
 &lt;p&gt;At first we create a folder called Angular2-JSPM-Setup and navigate our terminal to the folder. Within our terminal we run the follow commands:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install jspm -g
 jspm init -y&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The npm install is used to get jspm which will install our frontend package manager. For more information see: &lt;a href=&quot;http://jspm.io/&quot;&gt;JSPM&lt;/a&gt;
-&lt;br /&gt;JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.&lt;/pre&gt;&lt;br /&gt;&lt;br /&gt;
-After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot; alt=&quot;folder structure&quot;&gt;
-&lt;br/&gt;
+&lt;br /&gt;JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.
+After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: &lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG&quot; alt=&quot;folder structure&quot; /&gt;
+&lt;br /&gt;
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;typescriptOptions: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -537,7 +553,7 @@ Now we will change the config.js a little bit to make it compatible with our fol
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js&quot;&gt;config.js&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/config.js&quot;&gt;config.js&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
 And finally we will create a &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt; file within our root folder. This file is used to give the typescript compiler some informations about our environment.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -556,14 +572,17 @@ And finally we will create a &lt;a href=&quot;https://github.com/Microsoft/TypeS
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;compileOnSave&amp;quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;        /* on default the compiler will create js files */
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/tsconfig.json&quot;&gt;tsconfig.json&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note: &lt;/b&gt;The comments in the tsconfig file might give you an error, so you better delete them.
-&lt;br/&gt;&lt;br/&gt;To get all the packages we need for development, we will use jspm install.
+&lt;br /&gt;&lt;br /&gt;To get all the packages we need for development, we will use jspm install.
 To find out what packages are currently available with the jspm installer
-you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:
-&lt;pre&gt;&lt;code&gt;jspm install ts &lt;br/&gt;jspm install angular2&lt;/pre&gt;&lt;/code&gt;
-The first command will install the typescript plugin which is used for our ts loader, that you can see above.
-&lt;br/&gt;&lt;br/&gt;
+you can use the &lt;a href=&quot;http://kasperlewau.github.io/registry/#/&quot;&gt;jspm-registry&lt;/a&gt;. So now lets run some more code in our terminal:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jspm install ts
+jspm install angular2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The first command will install the typescript plugin which is used for our ts loader, that you can see above.
+&lt;br /&gt;&lt;br /&gt;
 Normally this is everything you need for your project setup, but there is currently an error with the &lt;a href=&quot;https://github.com/Microsoft/TypeScript/issues/6012&quot;&gt;module resolution&lt;/a&gt;.
 So we need to add the following lines to our package.json file:&lt;/p&gt;
 
@@ -576,11 +595,11 @@ So we need to add the following lines to our package.json file:&lt;/p&gt;
     &lt;span class=&quot;s2&quot;&gt;&amp;quot;zone.js&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.5.10&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+&lt;p&gt;File: &lt;a href=&quot;https://github.com/MarioBrendel/Angular2-Jspm-Typescript-Atom-Seed/blob/master/package.json&quot;&gt;package.json&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
 Now call npm install within your terminal and all dependencies will be downloaded for your project. Sadly we have duplicated all our angular2 dependencies, but this is necessary since the live error analysis would throw errors as soon as we import a module from the angular2 package.
-&lt;br/&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install, &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so I would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.
+&lt;br /&gt;&lt;b&gt;Note: &lt;/b&gt;Our code would also run without the angular2 files from the npm install, &lt;b&gt;BUT&lt;/b&gt; the live error analysis will show an error for every angular2 module we want to use. This could be really confusing so I would recommend to install angular2 via npm too. I hope that this bug will be solved in the future because jspm is probably the best frontend package manager. If you are from the java world it mostly feels like maven.&lt;/p&gt;
 &lt;h2&gt;Writing Some Code&lt;/h2&gt;
-Now that we&amp;#39;ve got everything wired up we will write some code. At first we&amp;#39;ll create a index.html file at our root folder with the following code:&lt;/p&gt;
+&lt;p&gt;Now that we’ve got everything wired up we will write some code. At first we’ll create a index.html file at our root folder with the following code:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
@@ -620,13 +639,16 @@ bootstrap&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;AppComponent&lt;span clas
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Finally our folder structure should look something like this:
-&lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_final(part%201).PNG&quot; alt=&quot;final setup&quot;&gt;
+&lt;img src=&quot;http://localhost:4000/public/images/2016-01-28-Setup/Setup_final(part 1).PNG&quot; alt=&quot;final setup&quot; /&gt;&lt;/p&gt;
 &lt;h2&gt;Running The Application&lt;/h2&gt;
-To run our Application we execute the following commands:
-&lt;pre&gt;&lt;code&gt;npm install live-server -g &lt;br/&gt;live-server&lt;/pre&gt;&lt;/code&gt;
-This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
-&lt;br/&gt;&lt;/br&gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we
-don&amp;#39;t have to wait 5 seconds until every change to our app is published.
+&lt;p&gt;To run our Application we execute the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install live-server -g
+live-server&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
+&lt;br /&gt;&amp;lt;/br&amp;gt;In the next part of this tutorial we will use SystemJS Hot reloader, so that we
+don’t have to wait 5 seconds until every change to our app is published.
 Furthermore we will use the bundling of jspm to generate an independent js file of our application.&lt;/p&gt;
 </content>
  </entry>

@@ -27,7 +27,7 @@ jspm init -y
 {% endhighlight %}
 
 The npm install is used to get jspm which will install our frontend package manager. For more information see: [JSPM](http://jspm.io/)
-<br />JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.</pre><br /><br />
+<br />JSPM init will initialize our project. The -y flag is used to answer all the init questions with yes. If you want you can call jspm init without the -y flag and discover, what jspm lets you configure.
 After you have executed these commands, create an app folder within you root folder (Angular2-JSPM-Setup). Your project should now look like this: ![folder structure]({{ site.url }}/public/images/2016-01-28-Setup/Setup_after_JSPMInit.PNG)
 <br/>
 Now we will change the config.js a little bit to make it compatible with our following typescript files. To do that copy the following code and paste it  in the System.config:
@@ -76,7 +76,10 @@ File: [tsconfig.json](https://github.com/MarioBrendel/Angular2-Jspm-Typescript-A
 <br/><br/>To get all the packages we need for development, we will use jspm install.
 To find out what packages are currently available with the jspm installer
 you can use the [jspm-registry](http://kasperlewau.github.io/registry/#/). So now lets run some more code in our terminal:
-<pre><code>jspm install ts <br/>jspm install angular2</pre></code>
+{% highlight bash %}
+jspm install ts
+jspm install angular2
+{% endhighlight %}
 The first command will install the typescript plugin which is used for our ts loader, that you can see above.
 <br/><br/>
 Normally this is everything you need for your project setup, but there is currently an error with the [module resolution](https://github.com/Microsoft/TypeScript/issues/6012).
@@ -146,7 +149,10 @@ Finally our folder structure should look something like this:
 ![final setup]({{ site.url }}/public/images/2016-01-28-Setup/Setup_final(part 1).PNG)
 <h2>Running The Application</h2>
 To run our Application we execute the following commands:
-<pre><code>npm install live-server -g <br/>live-server</pre></code>
+{% highlight bash %}
+npm install live-server -g
+live-server
+{% endhighlight %}
 This will start our application and print hello world on your browser. If you had any issues with this tutorial feel free to contact me.
 <br/></br>In the next part of this tutorial we will use SystemJS Hot reloader, so that we
 don't have to wait 5 seconds until every change to our app is published.

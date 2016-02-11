@@ -93,22 +93,22 @@
       <div class="post">
   <h1 class="post-title">Lets create a social media app (Part 1 - The Forms)</h1>
   <span class="post-date">05 Feb 2016</span>
-  <p>In this tutorial series we&#39;ll try to build a social media app with Angular 2.
+  <p>In this tutorial series we’ll try to build a social media app with Angular 2.
 This application will be like a stripped down Facebook. So there will be a register-/login form, profiles and so on.
 The great thing about this app is that we can use all of the core features of Angular2. So lets dive right into it.
 If you want to have the same styles as I have, you need to use: <a href="https://bootswatch.com/paper/bootstrap.min.css">bootstrap-paper-css</a>.
-<br/> <br/><b>Note: </b>Since there are already a lot of really good basic tutorials I may not explain everything.
-If you have trouble to follow, feel free to checkout the <a href="https://angular.io/docs/ts/latest/guide/forms.html">Angular2 form</a> and <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html">Angular2 template syntax</a> guide.
+<br /> <br /><b>Note: </b>Since there are already a lot of really good basic tutorials I may not explain everything.
+If you have trouble to follow, feel free to checkout the <a href="https://angular.io/docs/ts/latest/guide/forms.html">Angular2 form</a> and <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html">Angular2 template syntax</a> guide.</p>
 <h2>Goal Of This Part</h2>
-In this part we want to build a form that will look like this:
-<img src="http://localhost:4000/public/gifs/form_in_action.gif" alt="example form">
-At first we&#39;ll program a little example with <a href="https://angular.io/docs/ts/latest/api/common/Control-class.html">Control</a>,
+<p>In this part we want to build a form that will look like this:
+<img src="http://localhost:4000/public/gifs/form_in_action.gif" alt="example form" />
+At first we’ll program a little example with <a href="https://angular.io/docs/ts/latest/api/common/Control-class.html">Control</a>,
 <a href="https://angular.io/docs/ts/latest/api/common/ControlGroup-class.html">Controlgroups</a> and
 <a href="https://angular.io/docs/ts/latest/api/common/Validators-class.html">Validators</a> to see how they work.
-After that we&#39;ll write our own custom controls and validators which will be more efficient for our use case.
+After that we’ll write our own custom controls and validators which will be more efficient for our use case.</p>
 <h2>The First Field</h2>
-Before we get to the coding part make sure you have a folder structure like this:
-<img src="http://localhost:4000/public/images/Social-Media-App(Part%201%20-%20The%20Forms)/starting_folder_structure.PNG" alt="folder-structure">
+<p>Before we get to the coding part make sure you have a folder structure like this:
+<img src="http://localhost:4000/public/images/Social-Media-App(Part 1 - The Forms)/starting_folder_structure.PNG" alt="folder-structure" />
 The app.component.ts file is pretty straight forward:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">import <span class="o">{</span> RegisterComponent <span class="o">}</span> from <span class="s2">&quot;./form/register.component&quot;</span><span class="p">;</span>
@@ -124,8 +124,8 @@ import <span class="o">{</span> Component <span class="o">}</span> from <span cl
   constructor<span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<p>If you don&#39;t know what the bootstrap.ts is, read my <a href="http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1">Angular2 setup tutorial</a>.
-<br/>Don&#39;t be scared if you get an error at the moment. Its because we haven&#39;t created the Registercomponent. <br\> <br\></p>
+<p>If you don’t know what the bootstrap.ts is, read my <a href="http://localhost:4000/setup/2016/01/28/Angular2_Jspm_Setup_Part1">Angular2 setup tutorial</a>.
+<br />Don’t be scared if you get an error at the moment. Its because we haven’t created the Registercomponent. &lt;br&gt; &lt;br&gt;</p>
 
 <p>As you may have experienced, forms can get really big and intimidating. So lets take a look at a basic register form
 with only 1 field that behaves similarly to the example above:</p>
@@ -178,11 +178,11 @@ import <span class="o">{</span> FormBuilder, Validators, ControlGroup <span clas
   <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<p><b>Note: </b> This example only shows 1 field. <br/>
-HOLY COW that&#39;s a lot of code/template for just 1 field. I&#39;ll promise you that at the end of this tutorial this will look way better,
-but for now we leave it as it is and talk a little bit about controls.
+<p><b>Note: </b> This example only shows 1 field. <br />
+HOLY COW that’s a lot of code/template for just 1 field. I’ll promise you that at the end of this tutorial this will look way better,
+but for now we leave it as it is and talk a little bit about controls.</p>
 <h2>How Controls Work</h2>
-Controls are pretty straight forward in Angular2. You could create a Controlgroup like this:</p>
+<p>Controls are pretty straight forward in Angular2. You could create a Controlgroup like this:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">this.username <span class="o">=</span> new Control<span class="o">(</span><span class="s2">&quot;&quot;</span>, Validator.required<span class="o">)</span><span class="p">;</span>
 this.email <span class="o">=</span> new Control<span class="o">(</span><span class="s2">&quot;&quot;</span>, Validator.required<span class="o">)</span><span class="p">;</span>
@@ -196,13 +196,13 @@ this.formControl <span class="o">=</span> new ControlGroup<span class="o">({</sp
   telephone: this.telephone
 <span class="o">})</span><span class="p">;</span></code></pre></div>
 
-<p>So what&#39;s happening here? At first we&#39;ve created our Control objects with an empty string and a validator.
+<p>So what’s happening here? At first we’ve created our Control objects with an empty string and a validator.
 The empty string is the initial value of that control.
 The second parameter tells us that the field on which the control is applied is required.
 For example if you apply the username control on a username input field it would be invalid as long as no username has been entered.
-But we don&#39;t want to watch only a single input field, instead we are interested in the whole form.
+But we don’t want to watch only a single input field, instead we are interested in the whole form.
 To achieve that we just wrap the form control around all controls that are important.
-<br/>Since this is a lot of code we can shorten this a little bit by injecting the formbuilder and use him like this:</p>
+<br />Since this is a lot of code we can shorten this a little bit by injecting the formbuilder and use him like this:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">constructor<span class="o">(</span>private _fb: FormBuilder<span class="o">)</span> <span class="o">{</span>
   this.registerForm <span class="o">=</span> this._fb.group<span class="o">({</span>
@@ -214,9 +214,9 @@ To achieve that we just wrap the form control around all controls that are impor
 <span class="o">}</span></code></pre></div>
 
 <p>This is the equivalent to the code given above.
-<br/> You want to know a little bit more about this topic? Then go to: <a href="https://angular.io/docs/ts/latest/guide/forms.html">Angular2 - Forms</a>
+<br /> You want to know a little bit more about this topic? Then go to: <a href="https://angular.io/docs/ts/latest/guide/forms.html">Angular2 - Forms</a></p>
 <h2>Build Form Field Components</h2>
-To shorten our register component we want to encapsulate this code:</p>
+<p>To shorten our register component we want to encapsulate this code:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;div <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span> <span class="o">[</span>class.has-error<span class="o">]=</span><span class="s2">&quot;!regForm.form.find(&#39;username&#39;).valid</span>
 <span class="s2">                                                  &amp;&amp; regForm.form.find(&#39;username&#39;).dirty&quot;</span>&gt;
@@ -236,7 +236,7 @@ To shorten our register component we want to encapsulate this code:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;formField <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Username&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nv">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">[</span>control<span class="o">]=</span><span class="s2">&quot;username&quot;</span>&gt;&lt;/formField&gt;</code></pre></div>
 
-<p>That looks nice, does it? Well let&#39;s see how we can achieve that.
+<p>That looks nice, does it? Well let’s see how we can achieve that.
 At first we create a new typescript file under the folder form/field and we call that file Formfield.ts (not the best name but ok for this tutorial).
 The file will look like this:</p>
 
@@ -271,35 +271,35 @@ import <span class="o">{</span> Control <span class="o">}</span> from <span clas
 
 <span class="o">}</span></code></pre></div>
 
-<p>Let&#39;s take a little deeper look what each part actually does.</p>
+<p>Let’s take a little deeper look what each part actually does.</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;div <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span> <span class="o">[</span>class.has-error<span class="o">]=</span><span class="s2">&quot;!control.valid &amp;&amp; control.dirty&quot;</span>&gt;</code></pre></div>
 
 <p>This part will color our input field red as soon as the given control is not valid and the value of the input has changed.
-<br/><br/></p>
+<br /><br /></p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;label <span class="o">[</span>attr.for<span class="o">]=</span><span class="s2">&quot;name&quot;</span>&gt;<span class="o">{{</span>name<span class="o">}}</span>&lt;/label&gt;
     &lt;input <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;{{type}}&quot;</span>  <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;form-control&quot;</span>
             <span class="nv">placeholder</span><span class="o">=</span><span class="s2">&quot;{{name}}&quot;</span>
             <span class="o">[</span>ngFormControl<span class="o">]=</span><span class="s2">&quot;control&quot;</span>&gt;</code></pre></div>
 
-<p>Here we&#39;re applying the type(text/email...), which came as an input variable, and the control.
+<p>Here we’re applying the type(text/email…), which came as an input variable, and the control.
 The control is used to validate the field. More on this in the next chapter.
-<br/><br/> Last but not least we got this snippet:</p>
+<br /><br /> Last but not least we got this snippet:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;div <span class="o">[</span>hidden<span class="o">]=</span><span class="s2">&quot;control.untouched || control.valid&quot;</span> <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;alert alert-danger&quot;</span>&gt;
   This field is required.
 &lt;/div&gt;</code></pre></div>
 
 <p>This will show the red bar right under the input as soon as the user has touched the input field and it is invalid.
-Wow that was actually pretty easy. Now we can reuse this form field everywhere we want... <b>BUT</b> wait.
+Wow that was actually pretty easy. Now we can reuse this form field everywhere we want… <b>BUT</b> wait.
 The error message will always be the same no matter what the actual error actually was. We have to change that.
-Technically we could provide the error message via an input variable to this component, but this wouldn&#39;t be
+Technically we could provide the error message via an input variable to this component, but this wouldn’t be
 a good approach, since we have to declare the same error message every time we want to use the same formfield.
 Furthermore the best approach would be to define our error message within the validator, because he is responsible
-for the given error. So lets see how we can do this.
+for the given error. So lets see how we can do this.</p>
 <h2>Build Custom Validations and Controls</h2>
-As we&#39;ve seen before, our error message is fix. To get around that we&#39;ll first build a custom validator.
+<p>As we’ve seen before, our error message is fix. To get around that we’ll first build a custom validator.
 This validator will check if our username starts with a letter and has at least 3 characters.
 We place our formfieldvalidator.service.ts file right under the validation folder.</p>
 
@@ -327,8 +327,8 @@ import <span class="o">{</span> Injectable <span class="o">}</span> from <span c
   <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<p>Ok now I&#39;m pretty sure you have a couple of questions. Why do we need that interface?
-Firstly we are a little bit more expressive with our expected return. But this doesn&#39;t explain
+<p>Ok now I’m pretty sure you have a couple of questions. Why do we need that interface?
+Firstly we are a little bit more expressive with our expected return. But this doesn’t explain
 why we are returning an object anyway. Why not a string? Well for that we have to look in the AbstractControl
 class (the Control class inherits from AbstractControl):</p>
 
@@ -361,7 +361,7 @@ import <span class="o">{</span> ValidationResult <span class="o">}</span> from <
 <p>Ok, cool. Now our errors will contain of ValidationResults(which are currently only strings). These Results
 have a message that we access via our getter. Wow that was a lot of stuff and not that easy to understand.
 If you want you can check my <a href="https://github.com/MarioBrendel/Angular2-Social-Media-App">Github repo</a> and take your 10minutes to grasp everything.
-I&#39;m not sure either if that is best practice but I&#39;m actually pretty satisfied with the result.
+I’m not sure either if that is best practice but I’m actually pretty satisfied with the result.
 If we put everything together our final register form looks like this:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">import <span class="o">{</span> FormControl <span class="o">}</span> from <span class="s2">&quot;./contol/FormControl&quot;</span><span class="p">;</span>
@@ -424,10 +424,10 @@ import <span class="o">{</span> FormFieldValidationService <span class="o">}</sp
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">@Input<span class="o">()</span> control: FormControl<span class="p">;</span></code></pre></div>
 
-<p>Wow this looks way better than our first register component :). <br/>
-<b>Note: </b>We can&#39;t use the formbuilder anymore. I&#39;m not entirely sure why it&#39;s not working,
-but this code isn&#39;t more complex than the code with the formbuilder. <br/> <br/>
-Since I haven&#39;t shown all validators you may want to visit my <a href="https://github.com/MarioBrendel/Angular2-Social-Media-App">Github page</a>
+<p>Wow this looks way better than our first register component :). <br />
+<b>Note: </b>We can’t use the formbuilder anymore. I’m not entirely sure why it’s not working,
+but this code isn’t more complex than the code with the formbuilder. <br /> <br />
+Since I haven’t shown all validators you may want to visit my <a href="https://github.com/MarioBrendel/Angular2-Social-Media-App">Github page</a>
 I hope you liked this tutorial. If you have any questions feel free to ask me.</p>
 
 </div>
@@ -436,6 +436,14 @@ I hope you liked this tutorial. If you have any questions feel free to ask me.</
   <h2>Related Posts</h2>
   <ul class="related-posts">
     <ul>
+      
+        
+          
+            
+          
+            
+          
+        
       
         
       
